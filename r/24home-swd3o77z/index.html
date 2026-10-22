@@ -138,6 +138,8 @@ code{font-family:var(--f-mono);font-size:.82em;background:var(--purple-soft);col
 .byline span{display:inline-flex;align-items:center;gap:6px}
 .byline .ico{width:16px;height:16px;color:var(--purple)}
 .lede{color:var(--muted);margin-top:16px;font-size:1.05rem}
+.overview-note{display:flex;align-items:flex-start;gap:10px;margin-top:18px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface2);color:var(--fg);font-size:.92rem;max-width:62ch}
+.overview-note .ico{width:18px;height:18px;flex-shrink:0;margin-top:2px;color:var(--purple)}
 .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
 /* Phones: headline and byline only, so the scorecard starts above the fold (D54) */
 @media (max-width:640px){.hero .lede,.hero .facts{display:none}}
@@ -609,7 +611,8 @@ code{background:var(--surface2);border:1px solid var(--line)}
   <div class="inner">
     <div>
       <h1>Can <span class="brand-name" translate="no">24home</span> <em>rank, get cited and turn visits into sales?</em></h1>
-      <div class="byline"><span><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg>22 October 2026</span><span><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg>SEO infrastructure check</span></div>
+      <div class="byline"><span><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg>22 October 2026</span><span><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg>SEO infrastructure check · Overview</span></div>
+      <p class="overview-note"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg><span><b>This is an overview report.</b> It shows the scores and how we tested. The full report, with every finding, the evidence behind it and a fix plan by impact and effort, will be presented separately.</span></p>
       <p class="lede">We tested the live 24home.bg shop (WordPress and WooCommerce) across eight page types, from the home page to the cart. Scores are weighted by what 2026 evidence says moves rankings and AI citations.</p>
       <div class="facts">
         <span class="fact"><b>24home.bg</b> · BG · 732 URLs</span>
@@ -643,7 +646,7 @@ code{background:var(--surface2);border:1px solid var(--line)}
 <section class="sec gutter" id="breakdown" data-nav="score">
   <div class="inner">
     <div class="chapter"><div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></span><div><h2>Score breakdown</h2><span class="weight">Each table adds up to 100 when nothing is wrong</span></div></div></div></div>
-    <p class="summary">Weights come from our 2026 review of what moves rankings and AI citations (see <a href="#sources">Methodology &amp; Sources</a>). Rows are in order of weight. The Growth readiness score is separate and is not included here.</p>
+    <p class="summary">Weights come from our 2026 review of what moves rankings and AI citations (see <a href="#sources">Methodology &amp; Sources</a>). Rows are in order of weight. The Growth readiness score is separate and is not included here. The findings behind each row are in the full report.</p>
     <div class="two">
       <div>
         <h3><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg>SEO readiness · 70 / 100</h3>
@@ -744,7 +747,7 @@ code{background:var(--surface2);border:1px solid var(--line)}
 <footer class="site gutter">
   <div class="inner">
     <a class="brand" href="#score" aria-label="Back to top"><span class="wordmark" translate="no">24home<span> · SEO infrastructure check</span></span></a>
-    <span>Prepared 22 October 2026 · <a href="#sources">Sources</a></span>
+    <span>Overview report · Prepared 22 October 2026 · <a href="#sources">Sources</a></span>
   </div>
 </footer>
 
