@@ -1,17 +1,18 @@
 <!doctype html>
-<html lang="en">
+<html lang="bg">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="referrer" content="no-referrer">
 <title>24home Infrastructure Check</title>
+<meta http-equiv="content-language" content="bg">
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="theme-color" content="#fafbfc">
 <link rel="icon" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="16" fill="%23111827"/%3E%3Crect x="15" y="34" width="8" height="16" rx="2" fill="%23b39dfa"/%3E%3Crect x="28" y="24" width="8" height="26" rx="2" fill="%23b39dfa"/%3E%3Crect x="41" y="14" width="8" height="36" rx="2" fill="%23ebc062"/%3E%3C/svg%3E'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>[hidden]{display:none!important}body{margin:0}</style>
 </head>
 <body>
@@ -26,7 +27,7 @@
   /* Part hues: wayfinding only (tiles, edges, second row, gain tags). Status colours carry meaning; purple means "you can click this". */
   --seo:#1d4ed8; --seo-soft:#e8effd; --ai:#0e7490; --ai-soft:#e3f4f7; --bey:#a21caf; --bey-soft:#f8e8fa;
   --hue:var(--purple); --hue-soft:var(--purple-soft);
-  --f-sans:"Plus Jakarta Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-sans:"Plus Jakarta Sans","Manrope","Segoe UI",system-ui,-apple-system,sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
   color-scheme:light;
 }
@@ -41,7 +42,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scrollbar-color:var(--line-strong) var(--bg);-webkit-tap-highlight-color:transparent}
-body{background:var(--bg);color:var(--fg);font-family:var(--f-sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;touch-action:manipulation;caret-color:var(--purple)}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-sans);font-feature-settings:"locl" 0;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;touch-action:manipulation;caret-color:var(--purple)}
 ::selection{background:color-mix(in srgb,var(--purple-2) 28%,transparent);color:var(--fg)}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--header-bg)}
 .gutter{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
@@ -570,37 +571,37 @@ code{background:var(--surface2);border:1px solid var(--line)}
   </defs>
 </svg>
 
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main">Към съдържанието</a>
 
 <header class="site-header gutter">
   <div class="inner bar">
-    <a class="brand" href="#score" aria-label="24home SEO check, back to top"><span class="wordmark" translate="no">24home<span> · SEO check</span></span></a>
-    <nav class="nav" aria-label="Report sections">
-      <a href="#score" data-nav="score">Scorecard</a>
+    <a class="brand" href="#score" aria-label="24home SEO check, обратно в началото"><span class="wordmark" translate="no">24home<span> · SEO check</span></span></a>
+    <nav class="nav" aria-label="Раздели на доклада">
+      <a href="#score" data-nav="score">Оценки</a>
     </nav>
-    <a class="icon-btn meth-btn" href="#sources" data-nav="factors" aria-label="Methodology"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><span class="lbl" aria-hidden="true">Methodology</span></a>
-    <button class="icon-btn" id="searchBtn" type="button" aria-expanded="false" aria-controls="searchPanel" aria-label="Search the report" aria-keyshortcuts="/"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><span class="lbl" aria-hidden="true">Search<kbd>/</kbd></span></button>
-    <button class="icon-btn" id="modeBtn" type="button" aria-label="Switch to dark mode"><svg class="ico" aria-hidden="true"><use id="modeUse" href="#i-moon"/></svg><span class="lbl" id="modeTip" aria-hidden="true">Dark mode</span></button>
-    <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel"><svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg><span class="t">Sections</span></button>
+    <a class="icon-btn meth-btn" href="#sources" data-nav="factors" aria-label="Методология"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><span class="lbl" aria-hidden="true">Методология</span></a>
+    <button class="icon-btn" id="searchBtn" type="button" aria-expanded="false" aria-controls="searchPanel" aria-label="Търсене в доклада" aria-keyshortcuts="/"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><span class="lbl" aria-hidden="true">Търсене<kbd>/</kbd></span></button>
+    <button class="icon-btn" id="modeBtn" type="button" aria-label="Превключи към тъмен режим"><svg class="ico" aria-hidden="true"><use id="modeUse" href="#i-moon"/></svg><span class="lbl" id="modeTip" aria-hidden="true">Тъмен режим</span></button>
+    <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel"><svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg><span class="t">Раздели</span></button>
   </div>
-  <nav class="subnav gutter" id="subnav" aria-label="Sections in this group" hidden>
+  <nav class="subnav gutter" id="subnav" aria-label="Раздели в тази група" hidden>
     <div class="inner" id="subnavInner"></div>
   </nav>
   <div class="menu-panel gutter" id="menuPanel" hidden>
     <div class="inner">
-      <span class="grp">Overview</span>
-      <a href="#score"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg>Scorecard<span class="s">70 · 74 · 49</span></a>
-      <span class="grp">Methodology</span>
-      <a href="#sources"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg>Methodology &amp; Sources</a>
-      <span class="grp">Display</span>
-      <button class="mode-row" id="modeRow" type="button" role="switch" aria-checked="false"><svg class="ico" aria-hidden="true"><use id="modeRowUse" href="#i-moon"/></svg>Dark mode<span class="sw" aria-hidden="true"></span></button>
+      <span class="grp">Обзор</span>
+      <a href="#score"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg>Оценки<span class="s">70 · 74 · 49</span></a>
+      <span class="grp">Методология</span>
+      <a href="#sources"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg>Методология и източници</a>
+      <span class="grp">Изглед</span>
+      <button class="mode-row" id="modeRow" type="button" role="switch" aria-checked="false"><svg class="ico" aria-hidden="true"><use id="modeRowUse" href="#i-moon"/></svg>Тъмен режим<span class="sw" aria-hidden="true"></span></button>
     </div>
   </div>
-  <div class="search-panel gutter" id="searchPanel" role="dialog" aria-label="Search the report" hidden>
+  <div class="search-panel gutter" id="searchPanel" role="dialog" aria-label="Търсене в доклада" hidden>
     <div class="inner">
-      <div class="sp-field"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><input id="searchInput" type="search" placeholder="Search the report, e.g. canonical, robots.txt, GA4" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="searchResults" aria-autocomplete="list" aria-label="Keyword"><kbd>Esc</kbd></div>
+      <div class="sp-field"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><input id="searchInput" type="search" placeholder="Търсене в доклада, напр. canonical, robots.txt, GA4" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="searchResults" aria-autocomplete="list" aria-label="Ключова дума"><kbd>Esc</kbd></div>
       <p class="sp-status" id="searchStatus" aria-live="polite"></p>
-      <ul class="sp-results" id="searchResults" role="listbox" aria-label="Matches"></ul>
+      <ul class="sp-results" id="searchResults" role="listbox" aria-label="Резултати"></ul>
     </div>
   </div>
 </header>
@@ -610,83 +611,83 @@ code{background:var(--surface2);border:1px solid var(--line)}
 <section class="hero gutter" id="score" data-nav="score">
   <div class="inner">
     <div>
-      <h1>Can <span class="brand-name" translate="no">24home</span> <em>rank, get cited and turn visits into sales?</em></h1>
-      <div class="byline"><span><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg>22 October 2026</span><span><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg>SEO infrastructure check · Overview</span></div>
-      <p class="overview-note"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg><span><b>This is an overview report.</b> It shows the scores and how we tested. The full report, with every finding, the evidence behind it and a fix plan by impact and effort, will be presented separately.</span></p>
-      <p class="lede">We tested the live 24home.bg shop (WordPress and WooCommerce) across eight page types, from the home page to the cart. Scores are weighted by what 2026 evidence says moves rankings and AI citations.</p>
+      <h1>Може ли <span class="brand-name" translate="no">24home</span> <em>да се класира, да бъде цитиран и да превръща посещенията в продажби?</em></h1>
+      <div class="byline"><span><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg>22 октомври 2026 г.</span><span><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg>SEO infrastructure check · Обзор</span></div>
+      <p class="overview-note"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg><span><b>Това е обзорен доклад.</b> Той показва оценките и как тествахме. Пълният доклад, с всяка констатация, доказателствата зад нея и план за поправки по въздействие и усилие, ще бъде представен отделно.</span></p>
+      <p class="lede">Тествахме работещия магазин 24home.bg (WordPress и WooCommerce) в осем типа страници, от началната страница до количката. Оценките са претеглени според това, което данните от 2026 г. показват, че влияе на класирането и на AI цитиранията.</p>
       <div class="facts">
-        <span class="fact"><b>24home.bg</b> · BG · 732 URLs</span>
-        <span class="fact"><b>26</b> crawler agents tested</span>
-        <span class="fact"><b>8</b> page templates parsed</span>
-        <span class="fact"><b>6</b> pages axe-tested</span>
-        <span class="fact"><b>4</b> Lighthouse runs</span>
+        <span class="fact"><b>24home.bg</b> · BG · 732 URL адреса</span>
+        <span class="fact"><b>26</b> тествани crawler агента</span>
+        <span class="fact"><b>8</b> анализирани шаблона на страници</span>
+        <span class="fact"><b>6</b> страници, тествани с axe</span>
+        <span class="fact"><b>4</b> Lighthouse теста</span>
       </div>
     </div>
     <div class="score-card">
-      <span class="cap">SEO readiness score</span>
-      <a class="ring" href="#breakdown" aria-label="SEO score 70 out of 100, see the score breakdown">
+      <span class="cap">Оценка SEO readiness</span>
+      <a class="ring" href="#breakdown" aria-label="SEO readiness: 70 от 100, към разбивката на оценките">
         <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="54"/><circle class="val" cx="60" cy="60" r="54"/></svg>
-        <div class="num" aria-hidden="true"><strong id="scoreNum">70</strong><span>of 100</span><span class="see">See breakdown</span></div>
+        <div class="num" aria-hidden="true"><strong id="scoreNum">70</strong><span>от 100</span><span class="see">Виж разбивката</span></div>
       </a>
-      <div class="grade">Fair · a strong base, mostly config fixes</div>
-      <p class="grade-note">The four highest-impact fixes lift this to about 89.</p>
-      <a class="sub-score" href="#breakdown" aria-label="AI readiness score 74 out of 100, see the score breakdown">
+      <div class="grade">Среден · солидна основа, предимно корекции в настройките</div>
+      <p class="grade-note">Четирите поправки с най-голямо въздействие я вдигат до около 89.</p>
+      <a class="sub-score" href="#breakdown" aria-label="AI readiness: 74 от 100, към разбивката на оценките">
         <div class="mini"><svg viewBox="0 0 80 80" aria-hidden="true"><circle class="track" cx="40" cy="40" r="34"/><circle class="val" cx="40" cy="40" r="34"/></svg><strong id="aiNum" class="s-fair">74</strong></div>
-        <div class="t"><b>AI readiness <span class="of">· 74/100</span></b><span>Every AI crawler gets the full shop. Points go on duplicates, entity and freshness data.</span></div>
+        <div class="t"><b>AI readiness <span class="of">· 74/100</span></b><span>Всеки AI crawler получава целия магазин. Точки се губят от дублирани URL адреси, entity данни и сигнали за актуалност.</span></div>
       </a>
       <div class="sub-score ec">
         <div class="mini"><svg viewBox="0 0 80 80" aria-hidden="true"><circle class="track" cx="40" cy="40" r="34"/><circle class="val" cx="40" cy="40" r="34"/></svg><strong id="ecNum" class="s-fair">49</strong></div>
-        <div class="t"><b>Growth readiness <span class="of">· 49/100</span></b><span>Tracking works, but there is no consent banner and every tag fires before a choice.</span></div>
+        <div class="t"><b>Growth readiness <span class="of">· 49/100</span></b><span>Проследяването работи, но няма consent банер и всеки таг се задейства преди посетителят да е избрал.</span></div>
       </div>
-      <div class="legend"><span><i style="background:var(--good)"></i>80+ strong</span><span><i style="background:var(--fair-fill)"></i>40–79 fair</span><span><i style="background:var(--poor)"></i>under 40 weak</span></div>
+      <div class="legend"><span><i style="background:var(--good)"></i>80+ силен</span><span><i style="background:var(--fair-fill)"></i>40–79 среден</span><span><i style="background:var(--poor)"></i>под 40 слаб</span></div>
     </div>
   </div>
 </section>
 
 <section class="sec gutter" id="breakdown" data-nav="score">
   <div class="inner">
-    <div class="chapter"><div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></span><div><h2>Score breakdown</h2><span class="weight">Each table adds up to 100 when nothing is wrong</span></div></div></div></div>
-    <p class="summary">Weights come from our 2026 review of what moves rankings and AI citations (see <a href="#sources">Methodology &amp; Sources</a>). Rows are in order of weight. The Growth readiness score is separate and is not included here. The findings behind each row are in the full report.</p>
+    <div class="chapter"><div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></span><div><h2>Разбивка на оценките</h2><span class="weight">Всяка таблица дава общо 100, когато няма проблеми</span></div></div></div></div>
+    <p class="summary">Тежестите идват от нашия преглед за 2026 г. на това, което влияе на класирането и на AI цитиранията (вижте <a href="#sources">Методология и източници</a>). Редовете са подредени по тежест. Оценката Growth readiness е отделна и не е включена тук. Констатациите зад всеки ред са в пълния доклад.</p>
     <div class="two">
       <div>
         <h3><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg>SEO readiness · 70 / 100</h3>
         <div class="tbl bd"><table>
-          <thead><tr><th>Area</th><th>Score</th><th><span class="sr">Bar</span></th><th>Rating</th></tr></thead>
+          <thead><tr><th>Област</th><th>Оценка</th><th><span class="sr">Лента</span></th><th>Рейтинг</th></tr></thead>
           <tbody>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg>Rendering</span></td><td class="n">20 / 20</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg>Duplicate URLs</span></td><td class="n">4 / 9</td><td><div class="rowbar"><i style="width:44%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-filter"/></svg>Facets &amp; variants</span></td><td class="n">4 / 9</td><td><div class="rowbar"><i style="width:44%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-link"/></svg>Internal linking</span></td><td class="n">11 / 12</td><td><div class="rowbar"><i style="width:92%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-type"/></svg>Titles &amp; headings</span></td><td class="n">6 / 10</td><td><div class="rowbar"><i style="width:60%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-braces"/></svg>Structured data</span></td><td class="n">5 / 10</td><td><div class="rowbar"><i style="width:50%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg>Page speed</span></td><td class="n">3 / 8</td><td><div class="rowbar"><i style="width:38%"></i></div></td><td><span class="pill poor">Weak</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-activity"/></svg>Status codes</span></td><td class="n">8 / 8</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>Mobile parity</span></td><td class="n">4 / 4</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>HTTPS &amp; security</span></td><td class="n">0 / 2</td><td><div class="rowbar"><i style="width:0%"></i></div></td><td><span class="pill poor">Weak</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>URL structure</span></td><td class="n">2 / 2</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-map"/></svg>Sitemaps</span></td><td class="n">3 / 6</td><td><div class="rowbar"><i style="width:50%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg>Rendering</span></td><td class="n">20 / 20</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Силен</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg>Duplicate URLs</span></td><td class="n">4 / 9</td><td><div class="rowbar"><i style="width:44%"></i></div></td><td><span class="pill fair">Среден</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-filter"/></svg>Facets &amp; variants</span></td><td class="n">4 / 9</td><td><div class="rowbar"><i style="width:44%"></i></div></td><td><span class="pill fair">Среден</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-link"/></svg>Internal linking</span></td><td class="n">11 / 12</td><td><div class="rowbar"><i style="width:92%"></i></div></td><td><span class="pill good">Силен</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-type"/></svg>Titles &amp; headings</span></td><td class="n">6 / 10</td><td><div class="rowbar"><i style="width:60%"></i></div></td><td><span class="pill fair">Среден</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-braces"/></svg>Structured data</span></td><td class="n">5 / 10</td><td><div class="rowbar"><i style="width:50%"></i></div></td><td><span class="pill fair">Среден</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg>Page speed</span></td><td class="n">3 / 8</td><td><div class="rowbar"><i style="width:38%"></i></div></td><td><span class="pill poor">Слаб</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-activity"/></svg>Status codes</span></td><td class="n">8 / 8</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Силен</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>Mobile parity</span></td><td class="n">4 / 4</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Силен</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>HTTPS &amp; security</span></td><td class="n">0 / 2</td><td><div class="rowbar"><i style="width:0%"></i></div></td><td><span class="pill poor">Слаб</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>URL structure</span></td><td class="n">2 / 2</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Силен</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-map"/></svg>Sitemaps</span></td><td class="n">3 / 6</td><td><div class="rowbar"><i style="width:50%"></i></div></td><td><span class="pill fair">Среден</span></td></tr>
           </tbody>
-          <tfoot><tr><td>Total</td><td class="n">70 / 100</td><td colspan="2"></td></tr></tfoot>
+          <tfoot><tr><td>Общо</td><td class="n">70 / 100</td><td colspan="2"></td></tr></tfoot>
         </table></div>
       </div>
       <div>
         <h3><svg class="ico" aria-hidden="true"><use href="#i-sparkles"/></svg>AI visibility readiness · 74 / 100</h3>
         <div class="tbl bd"><table>
-          <thead><tr><th>Area</th><th>Score</th><th><span class="sr">Bar</span></th><th>Rating</th></tr></thead>
+          <thead><tr><th>Област</th><th>Оценка</th><th><span class="sr">Лента</span></th><th>Рейтинг</th></tr></thead>
           <tbody>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg>HTML for AI crawlers</span></td><td class="n">23 / 23</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>AI crawler access</span></td><td class="n">11 / 15</td><td><div class="rowbar"><i style="width:73%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg>Search indexability</span></td><td class="n">8 / 15</td><td><div class="rowbar"><i style="width:53%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-type"/></svg>Extractable content</span></td><td class="n">10 / 12</td><td><div class="rowbar"><i style="width:83%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-cart"/></svg>Product feeds</span></td><td class="n">6 / 10</td><td><div class="rowbar"><i style="width:60%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>Freshness signals</span></td><td class="n">4 / 7</td><td><div class="rowbar"><i style="width:57%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg>Entity &amp; trust</span></td><td class="n">3 / 5</td><td><div class="rowbar"><i style="width:60%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-tag"/></svg>Snippet controls</span></td><td class="n">4 / 4</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg>Agent readiness</span></td><td class="n">3 / 4</td><td><div class="rowbar"><i style="width:75%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg>Speed for AI fetchers</span></td><td class="n">2 / 2</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
-            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg>llms.txt &amp; AI files</span></td><td class="n">0 / 3</td><td><div class="rowbar"><i style="width:0%"></i></div></td><td><span class="pill poor">Weak</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg>HTML for AI crawlers</span></td><td class="n">23 / 23</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Силен</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>AI crawler access</span></td><td class="n">11 / 15</td><td><div class="rowbar"><i style="width:73%"></i></div></td><td><span class="pill fair">Среден</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg>Search indexability</span></td><td class="n">8 / 15</td><td><div class="rowbar"><i style="width:53%"></i></div></td><td><span class="pill fair">Среден</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-type"/></svg>Extractable content</span></td><td class="n">10 / 12</td><td><div class="rowbar"><i style="width:83%"></i></div></td><td><span class="pill good">Силен</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-cart"/></svg>Product feeds</span></td><td class="n">6 / 10</td><td><div class="rowbar"><i style="width:60%"></i></div></td><td><span class="pill fair">Среден</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>Freshness signals</span></td><td class="n">4 / 7</td><td><div class="rowbar"><i style="width:57%"></i></div></td><td><span class="pill fair">Среден</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg>Entity &amp; trust</span></td><td class="n">3 / 5</td><td><div class="rowbar"><i style="width:60%"></i></div></td><td><span class="pill fair">Среден</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-tag"/></svg>Snippet controls</span></td><td class="n">4 / 4</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Силен</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg>Agent readiness</span></td><td class="n">3 / 4</td><td><div class="rowbar"><i style="width:75%"></i></div></td><td><span class="pill fair">Среден</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg>Speed for AI fetchers</span></td><td class="n">2 / 2</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Силен</span></td></tr>
+            <tr><td><span class="an"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg>llms.txt &amp; AI files</span></td><td class="n">0 / 3</td><td><div class="rowbar"><i style="width:0%"></i></div></td><td><span class="pill poor">Слаб</span></td></tr>
           </tbody>
-          <tfoot><tr><td>Total</td><td class="n">74 / 100</td><td colspan="2"></td></tr></tfoot>
+          <tfoot><tr><td>Общо</td><td class="n">74 / 100</td><td colspan="2"></td></tr></tfoot>
         </table></div>
       </div>
     </div>
@@ -695,30 +696,30 @@ code{background:var(--surface2);border:1px solid var(--line)}
 
 <section class="sec gutter alt" id="sources" data-nav="factors">
   <div class="inner">
-    <div class="sec-head"><div class="title"><span class="tile gold"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg></span><div><h2>Methodology &amp; Sources</h2><span class="weight">How we tested, and what we didn't cover</span></div></div></div>
+    <div class="sec-head"><div class="title"><span class="tile gold"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg></span><div><h2>Методология и източници</h2><span class="weight">Как тествахме и какво не покрихме</span></div></div></div>
     <div class="cards">
       <article class="card">
-        <div class="ch"><span class="ci info"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg></span><div><h3>What we ran</h3></div></div>
+        <div class="ch"><span class="ci info"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg></span><div><h3>Какво направихме</h3></div></div>
         <ul class="clean">
-          <li>HTTP fetches of one product as a browser, as Googlebot and as 24 other agents, with and without a cache-busting parameter</li>
-          <li>URL-variant, filter, parameter and status-code probes, and a check of the sitemap index, its 9 files and a 14-URL sample</li>
-          <li>Parsing of the server HTML of 8 page templates for meta, canonical, headings, links, images and JSON-LD</li>
-          <li>A real Chrome session from the home page to the cart (one product added, then removed), recording the dataLayer, network calls, cookies and consent state</li>
-          <li>Local Lighthouse 12.8 (4 mobile runs), axe-core 4.10 on 6 pages, and a 24 px target-size measurement at phone width</li>
+          <li>HTTP заявки към една продуктова страница като браузър, като Googlebot и като 24 други агента, със и без cache-busting параметър</li>
+          <li>Проверки на URL варианти, филтри, параметри и status codes, както и проверка на sitemap index, неговите 9 файла и извадка от 14 URL адреса</li>
+          <li>Анализ на сървърния HTML на 8 шаблона на страници за meta тагове, canonical, заглавия, връзки, изображения и JSON-LD</li>
+          <li>Реална Chrome сесия от началната страница до количката (един продукт добавен и след това премахнат), със запис на dataLayer, мрежовите заявки, бисквитките и consent състоянието</li>
+          <li>Локален Lighthouse 12.8 (4 мобилни теста), axe-core 4.10 на 6 страници и измерване на target size от 24 px при ширина на телефон</li>
         </ul>
       </article>
       <article class="card">
-        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg></span><div><h3>What we didn't cover</h3></div></div>
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg></span><div><h3>Какво не покрихме</h3></div></div>
         <ul class="clean">
-          <li>Search Console, Bing AI Performance and index coverage</li>
-          <li>Real-user CrUX data, including INP (the PageSpeed Insights quota was exhausted)</li>
-          <li>Live prompt testing in ChatGPT, Perplexity and Gemini</li>
-          <li>Checkout, payment and purchase events: no order was placed, and no form was sent</li>
-          <li>The Merchant Center feed, ad accounts and the logged-in account area</li>
+          <li>Search Console, Bing AI Performance и index coverage</li>
+          <li>CrUX данни от реални потребители, включително INP (квотата на PageSpeed Insights беше изчерпана)</li>
+          <li>Тестове с реални prompts в ChatGPT, Perplexity и Gemini</li>
+          <li>Checkout, плащане и purchase събития: не беше направена поръчка и не беше изпратена форма</li>
+          <li>Фийдът в Merchant Center, рекламните акаунти и зоната за регистрирани потребители</li>
         </ul>
       </article>
     </div>
-    <h3>Key sources</h3>
+    <h3>Основни източници</h3>
     <ol class="sources">
       <li><a href="https://developers.google.com/search/docs/fundamentals/ai-optimization-guide">Google: Optimizing for generative AI search (Jul 2026)</a></li>
       <li><a href="https://developers.google.com/search/docs/appearance/ai-features">Google: AI features and your website (Dec 2025)</a></li>
@@ -746,18 +747,18 @@ code{background:var(--surface2);border:1px solid var(--line)}
 
 <footer class="site gutter">
   <div class="inner">
-    <a class="brand" href="#score" aria-label="Back to top"><span class="wordmark" translate="no">24home<span> · SEO infrastructure check</span></span></a>
-    <span>Overview report · Prepared 22 October 2026 · <a href="#sources">Sources</a></span>
+    <a class="brand" href="#score" aria-label="Обратно в началото"><span class="wordmark" translate="no">24home<span> · SEO infrastructure check</span></span></a>
+    <span>Обзорен доклад · Изготвен на 22 октомври 2026 г. · <a href="#sources">Източници</a></span>
   </div>
 </footer>
 
 <script>
 (function(){
-  var root=document.documentElement;
+  var root=document.documentElement; root.lang='bg';
   // Light by default; dark only when the viewer picks it here (remembered per browser).
   var modeBtn=document.getElementById('modeBtn'), modeUse=document.getElementById('modeUse'), meta=document.querySelector('meta[name="theme-color"]');
   var modeRow=document.getElementById('modeRow'), modeRowUse=document.getElementById('modeRowUse');
-  function setMode(m){ root.setAttribute('data-mode',m); modeUse.setAttribute('href', m==='dark'?'#i-sun':'#i-moon'); modeBtn.setAttribute('aria-label', m==='dark'?'Switch to light mode':'Switch to dark mode'); document.getElementById('modeTip').textContent = m==='dark'?'Light mode':'Dark mode';
+  function setMode(m){ root.setAttribute('data-mode',m); modeUse.setAttribute('href', m==='dark'?'#i-sun':'#i-moon'); modeBtn.setAttribute('aria-label', m==='dark'?'Превключи към светъл режим':'Превключи към тъмен режим'); document.getElementById('modeTip').textContent = m==='dark'?'Светъл режим':'Тъмен режим';
     modeRow.setAttribute('aria-checked', String(m==='dark')); modeRowUse.setAttribute('href', m==='dark'?'#i-sun':'#i-moon'); if(meta) meta.setAttribute('content', m==='dark'?'#0c1018':'#fafbfc'); try{localStorage.setItem('ddm-mode',m)}catch(e){} }
   var saved=null; try{saved=localStorage.getItem('ddm-mode')}catch(e){}
   setMode(saved==='dark'?'dark':'light');
@@ -833,10 +834,10 @@ code{background:var(--surface2);border:1px solid var(--line)}
     var btn=document.createElement('button'); btn.type='button'; btn.className='fold-btn';
     var h2=head.querySelector('h2'), area=h2?h2.textContent.trim().replace(/&/g,'&amp;').replace(/</g,'&lt;'):'';
     btn.setAttribute('aria-controls',fold.id);
-    var hint=s.id==='sources' ? '<small>methodology and sources</small>' : '<small>'+plural(issues,'issue')+' · '+plural(oks,'passed check')+'</small>';
+    var hint=s.id==='sources' ? '<small>методология и източници</small>' : '<small>'+plural(issues,'issue')+' · '+plural(oks,'passed check')+'</small>';
     function set(open){
       btn.setAttribute('aria-expanded',String(open));
-      btn.innerHTML=chev()+'<span class="sr">'+area+': </span>'+(open?'Hide details':'Show '+hint);
+      btn.innerHTML=chev()+'<span class="sr">'+area+': </span>'+(open?'Скрий детайлите':'Покажи '+hint);
       fold.classList.toggle('open',open); fold.classList.remove('settled');
       if(folds[s.id] && folds[s.id].onChange) folds[s.id].onChange();
       // Content stays clipped until the opening animation has really finished (slow devices included).
@@ -1031,12 +1032,12 @@ code{background:var(--surface2);border:1px solid var(--line)}
   function run(){
     var q=sInput.value.trim(), terms=norm(q).split(/\s+/).filter(Boolean);
     sList.innerHTML=''; sel=-1; sInput.removeAttribute('aria-activedescendant');
-    if(!terms.length){ sStatus.textContent='Type a keyword, for example canonical, robots.txt, GA4, consent or schema.'; sInput.setAttribute('aria-expanded','false'); return; }
+    if(!terms.length){ sStatus.textContent='Въведете ключова дума, например canonical, robots.txt, GA4, consent или schema.'; sInput.setAttribute('aria-expanded','false'); return; }
     var hits=index.filter(function(it){ return terms.every(function(w){ return it.nt.indexOf(w)>-1; }); });
     hits.forEach(function(it){ it.score=(it.head?20:0)+terms.filter(function(w){ return it.nh.indexOf(w)>-1; }).length*10; });
     // Findings and the fix plan first; the methodology evidence and sources after them.
     hits.sort(function(a,b){ return a.ref-b.ref || b.score-a.score || a.n-b.n; });
-    sStatus.textContent=hits.length ? hits.length+(hits.length===1?' match':' matches')+(hits.length>MAX?', showing the first '+MAX:'')+'. Enter opens the first.' : 'No matches for “'+q+'”. Try a shorter or different word.';
+    sStatus.textContent=hits.length ? hits.length+(hits.length===1?' резултат':' резултата')+(hits.length>MAX?', показани са първите '+MAX:'')+'. Enter отваря първия.' : 'Няма резултати за „'+q+'“. Опитайте с по-кратка или друга дума.';
     hits.slice(0,MAX).forEach(function(it,k){
       var li=document.createElement('li'); li.setAttribute('role','presentation');
       var body=it.rest ? snip(it.rest,terms) : '';
