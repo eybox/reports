@@ -1,0 +1,1719 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<title>24home Infrastructure Check</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#fafbfc">
+<link rel="icon" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="16" fill="%23111827"/%3E%3Crect x="15" y="34" width="8" height="16" rx="2" fill="%23b39dfa"/%3E%3Crect x="28" y="24" width="8" height="26" rx="2" fill="%23b39dfa"/%3E%3Crect x="41" y="14" width="8" height="36" rx="2" fill="%23ebc062"/%3E%3C/svg%3E'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>[hidden]{display:none!important}body{margin:0}</style>
+</head>
+<body>
+<style>
+/* Layout: light-first report (Read mode). Sticky header with 7 grouped links and a contextual second row for the SEO and Growth readiness groups; score hero; findings ordered by weight; each section = issues first, then one-line "checked and working" rows. */
+:root{
+  --bg:#fafbfc; --bg2:#f2f4f7; --surface:#ffffff; --surface2:#f7f8fa; --fg:#101828; --muted:#475467; --line:#e4e7ec; --line-strong:#d0d5dd; --track:#e9edf2;
+  --purple:#6d28d9; --purple-2:#8b5cf6; --purple-soft:#efe8fc; --purple-ink:#5b21b6; --on-purple:#ffffff;
+  --gold:#8f6310; --gold-bright:#d9a63a; --gold-soft:#fcf3dc; --gold-display:#b07d1c;
+  --good:#1d7a45; --good-bg:#e5f5ec; --fair:#b04a06; --fair-bg:#fdefe3; --fair-fill:#d4700a; --poor:#b42318; --poor-bg:#fdeceb;
+  --header-bg:rgba(250,251,252,.85); --glass:rgba(250,251,252,.85); --glass-panel:rgba(250,251,252,.94); --shadow:rgba(16,24,40,.14);
+  /* Part hues: wayfinding only (tiles, edges, second row, gain tags). Status colours carry meaning; purple means "you can click this". */
+  --seo:#1d4ed8; --seo-soft:#e8effd; --ai:#0e7490; --ai-soft:#e3f4f7; --bey:#a21caf; --bey-soft:#f8e8fa;
+  --hue:var(--purple); --hue-soft:var(--purple-soft);
+  --f-sans:"Plus Jakarta Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+:root[data-mode="dark"], :root[data-theme="dark"]:not([data-mode="light"]){
+  --bg:#0c1018; --bg2:#111723; --surface:#161d2b; --surface2:#1c2433; --fg:#e9edf4; --muted:#a6b0c3; --line:#263043; --line-strong:#36425c; --track:#263043;
+  --purple:#b39dfa; --purple-2:#8b5cf6; --purple-soft:#2a1c48; --purple-ink:#c9bbff; --on-purple:#170d29;
+  --gold:#ebc062; --gold-bright:#e6b94f; --gold-soft:#372a12; --gold-display:#ebc062;
+  --good:#74d39d; --good-bg:#16301f; --fair:#ffad66; --fair-bg:#3a2412; --fair-fill:#f0973c; --poor:#ff9585; --poor-bg:#3a1a1a;
+  --header-bg:rgba(12,16,24,.85); --glass:rgba(12,16,24,.85); --glass-panel:rgba(12,16,24,.94); --shadow:rgba(0,0,0,.45);
+  --seo:#8fb0ff; --seo-soft:#1a2747; --ai:#5fd3e6; --ai-soft:#0f2d35; --bey:#eb9cf5; --bey-soft:#361a3d;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scrollbar-color:var(--line-strong) var(--bg);-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;touch-action:manipulation;caret-color:var(--purple)}
+::selection{background:color-mix(in srgb,var(--purple-2) 28%,transparent);color:var(--fg)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--header-bg)}
+.gutter{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.inner{max-width:1080px;margin:0 auto}
+h1,h2,h3,h4{font-family:var(--f-sans);text-wrap:balance;line-height:1.2;margin:0;letter-spacing:-.015em}
+h2{font-size:clamp(1.4rem,2.8vw,1.85rem);font-weight:800} h3{font-size:1.06rem;font-weight:700;letter-spacing:-.005em}
+p{margin:0;max-width:70ch;text-wrap:pretty}
+/* Links never underline; they hover to brand gold. Inline links are semibold so they don't rely on colour alone. */
+a{color:var(--purple);text-decoration:none;transition:color .2s}
+a:hover{color:var(--gold)}
+:where(p,li,small,span,dd) > a:not([class]){font-weight:600}
+code{font-family:var(--f-mono);font-size:.82em;background:var(--purple-soft);color:var(--fg);padding:1px 6px;border-radius:5px;word-break:break-word}
+:focus-visible{outline:2px solid var(--purple);outline-offset:3px;border-radius:6px}
+/* On the dark header bar and scorecard the ring is light lilac, like dark mode (D59) */
+:root:not(.scrolled):not([data-mode="dark"]) .bar :focus-visible,.score-card :focus-visible{outline-color:#b39dfa}
+[tabindex="-1"]:focus{outline:none}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:12px;top:-60px;z-index:60;background:var(--fg);color:var(--bg);padding:10px 14px;border-radius:10px;font-weight:700;text-decoration:none;transition:top .2s}
+.skip:focus{top:calc(env(safe-area-inset-top,0px) + 10px)}
+
+/* Header */
+.site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;border-bottom:1px solid var(--line);transition:border-color .3s}
+/* The glass sits on a pseudo-element: a blur on the header itself would stop the second row and the panels from blurring the page (nested backdrop filters only see their parent). Header and second row are ONE frost: the layer grows down behind the row when it shows, so there is no seam where two separate blurs meet (D60). 85% for that bar, 94% for the menu and search panels, so text keeps its contrast over dark bands and the scorecard (D50, D59). */
+.site-header{--sub-h:53px}
+@media (pointer:coarse){.site-header{--sub-h:59px}}
+.site-header::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--header-bg);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);transition:background-color .3s,bottom .3s cubic-bezier(.2,.8,.2,1)}
+.site-header:has(.subnav.show)::before{bottom:calc(-1 * var(--sub-h))}
+.site-header:has(.subnav.show){border-bottom-color:transparent}
+/* Header: dark while the page sits at the top, light paper once you scroll (light mode only; dark mode stays dark). Only the bar takes the dark tokens, so the menu and search panels stay light (D48). */
+:root:not(.scrolled):not([data-mode="dark"]) .site-header{--header-bg:#111827;border-bottom-color:#111827}
+:root:not(.scrolled):not([data-mode="dark"]) body::before{background:#111827}
+:root:not(.scrolled):not([data-mode="dark"]) .bar{--fg:#f8fafc;--muted:#b4bccb;--line:#2a3446;--surface:#1a2333;--purple-soft:#2a1c48;--gold:#ebc062;--gold-soft:#372a12;--gold-bright:#e6b94f}
+.bar .nav a,.bar .icon-btn,.bar .wordmark{transition:color .3s,background-color .3s,border-color .3s}
+.bar{display:flex;align-items:center;gap:12px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg);flex-shrink:0;min-height:44px}
+.brand svg{width:34px;height:34px;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.brand:hover svg{transform:rotate(-8deg) scale(1.06)}
+.wordmark{font-weight:800;font-size:1.08rem;letter-spacing:-.02em}
+.wordmark span{color:var(--gold)}
+.nav{display:flex;gap:2px;margin-left:auto}
+.nav a{position:relative;white-space:nowrap;font-size:.88rem;font-weight:600;color:var(--muted);text-decoration:none;padding:10px 10px;border-radius:8px;transition:color .2s,background-color .2s}
+.nav a:hover{color:var(--gold);background:transparent}
+.nav a.active{color:var(--gold);background:var(--gold-soft)}
+/* FIX plan is the report's end goal: a solid purple call to action that turns brand gold on hover and when you're there */
+.nav a.cta{color:var(--on-purple);background:var(--purple);font-weight:700;padding-inline:14px;margin-inline:4px}
+.nav a.cta:hover,.nav a.cta.active{color:#1a1204;background:var(--gold-bright)}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:44px;min-width:44px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:600 .88rem var(--f-sans);cursor:pointer;transition:border-color .2s,background-color .2s}
+.icon-btn:hover{border-color:var(--purple-2);background:var(--purple-soft)}
+.menu-btn{display:none}
+.menu-panel{position:absolute;left:0;right:0;top:100%;background:var(--glass-panel);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);border-bottom:1px solid var(--line);box-shadow:0 24px 40px -24px var(--shadow);max-height:calc(100vh - 90px);overflow-y:auto;overscroll-behavior:contain;z-index:2}
+.menu-panel .inner{display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;padding-block:10px 16px}
+.menu-panel a{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--fg);font-weight:600;font-size:.94rem}
+.menu-panel a:hover{color:var(--gold)} .menu-panel a.active{color:var(--gold);background:var(--gold-soft)}
+.menu-panel a .ico{color:var(--purple);width:18px;height:18px}
+.menu-panel a.cta{color:var(--on-purple);background:var(--purple);font-weight:700} .menu-panel a.cta .ico{color:inherit}
+.menu-panel a.cta:hover,.menu-panel a.cta.active{color:#1a1204;background:var(--gold-bright)}
+.menu-panel a span.s{margin-left:auto;font-family:var(--f-mono);font-size:.76rem;color:var(--muted);font-weight:400}
+/* Phone menu: the light/dark switch lives here once the header folds into the hamburger (D49) */
+.mode-row{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border:0;border-radius:10px;background:transparent;color:var(--fg);font:600 .94rem var(--f-sans);cursor:pointer;text-align:left}
+.mode-row:hover{color:var(--gold)}
+.mode-row .ico{color:var(--purple);width:18px;height:18px}
+.mode-row .sw{position:relative;margin-left:auto;width:40px;height:24px;border-radius:99px;background:var(--line-strong);transition:background-color .2s;flex-shrink:0}
+.mode-row .sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.mode-row[aria-checked="true"] .sw{background:var(--purple)}
+.mode-row[aria-checked="true"] .sw::after{transform:translateX(16px)}
+.menu-panel .grp{grid-column:1/-1;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);padding:12px 12px 2px}
+/* Contextual second row */
+.subnav{position:absolute;left:0;right:0;top:100%;background:transparent;border-bottom:1px solid var(--line);opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .25s ease-out,transform .3s cubic-bezier(.2,.8,.2,1)}
+.subnav.show{opacity:1;transform:none;pointer-events:auto}
+.subnav .inner{max-width:1180px;display:flex;align-items:center;gap:5px;height:52px;overflow-x:auto;scrollbar-width:none;scroll-padding-inline:24px}
+.subnav.overflow .inner{mask-image:linear-gradient(90deg,transparent 0,#000 18px,#000 calc(100% - 28px),transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 18px,#000 calc(100% - 28px),transparent 100%)}
+@media (max-width:1320px){.subnav .lbl{display:none}}
+.subnav .inner::-webkit-scrollbar{display:none}
+.subnav .lbl{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);white-space:nowrap;padding-right:6px}
+.subnav a{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0;min-height:36px;padding:6px 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-size:.82rem;font-weight:600;text-decoration:none;transition:color .2s,border-color .2s,background-color .2s}
+.subnav a .ico{width:15px;height:15px}
+.subnav a:hover{color:var(--gold);border-color:var(--gold-bright)}
+.subnav a.active{color:#fff;background:var(--purple);border-color:var(--purple)}
+:root[data-mode="dark"] .subnav a.active{color:#160d26}
+.subnav[hidden]{display:block!important;visibility:hidden}
+/* Phones: search, then the hamburger in the outer corner (D52) */
+@media (max-width:1060px){.nav,.meth-btn,#modeBtn{display:none}.menu-btn{display:inline-flex}#searchBtn{margin-left:auto}}
+@media (max-width:480px){.wordmark{font-size:.98rem}.menu-panel .inner{grid-template-columns:1fr}.menu-btn .t{display:none}}
+@media (pointer:coarse){.subnav a{min-height:44px}.subnav .inner{height:58px}}
+
+/* Hero */
+.hero{background:radial-gradient(900px 420px at 88% -10%, color-mix(in srgb,var(--purple-2) 20%,transparent), transparent 62%), radial-gradient(600px 360px at 0% 110%, color-mix(in srgb,var(--gold-bright) 15%,transparent), transparent 60%), var(--bg2);border-bottom:1px solid var(--line)}
+.hero .inner{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:40px;align-items:center;padding-block:52px 56px}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;letter-spacing:-.03em}
+.hero h1 em{font-style:normal;color:var(--purple)}
+.hero h1 .brand-name{color:var(--gold-display)} /* the client's brand: a warmer, lighter gold for large text only (3.3:1 on the hero), D51 */
+.byline{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:14px;color:var(--muted);font-size:.9rem}
+.byline span{display:inline-flex;align-items:center;gap:6px}
+.byline .ico{width:16px;height:16px;color:var(--purple)}
+.lede{color:var(--muted);margin-top:16px;font-size:1.05rem}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+/* Phones: headline and byline only, so the scorecard starts above the fold (D54) */
+@media (max-width:640px){.hero .lede,.hero .facts{display:none}}
+.fact{font-size:.8rem;padding:6px 11px;border:1px solid var(--line);border-radius:99px;background:var(--surface);color:var(--muted)}
+.fact b{color:var(--fg);font-weight:700}
+.score-card{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:24px;display:flex;flex-direction:column;align-items:center;gap:12px;box-shadow:0 1px 2px rgba(29,20,48,.04),0 30px 60px -32px var(--shadow)}
+/* The headline score's label leads the card; it must outrank the mini-card titles */
+.score-card .cap{font-size:clamp(1.3rem,2.2vw,1.55rem);font-weight:800;letter-spacing:-.015em;line-height:1.2;color:var(--fg);text-align:center;text-wrap:balance}
+.ring{position:relative;display:block;width:188px;max-width:100%;aspect-ratio:1;color:inherit;text-decoration:none;border-radius:50%;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+a.ring:hover{transform:scale(1.03)}
+/* Quiet grey-on-grey hint; it only warms to gold when the ring is hovered */
+.ring .see{margin-top:6px;font-size:.72rem;font-weight:600;color:var(--muted);padding:2px 9px;border-radius:99px;background:var(--surface2);border:1px solid var(--line);transition:color .2s,background-color .2s,border-color .2s}
+a.ring:hover .see{color:var(--gold);background:var(--gold-soft);border-color:transparent}
+.ring svg,.mini svg{width:100%;height:100%;transform:rotate(-90deg)}
+.track{fill:none;stroke:var(--purple-soft)}
+.ring .track,.ring .val{stroke-width:12}
+.ring .val{fill:none;stroke:url(#ringGold);stroke-linecap:round;stroke-dasharray:339.29;stroke-dashoffset:101.79;animation:ring 1.6s cubic-bezier(.16,1,.3,1) both .2s}
+@keyframes ring{from{stroke-dashoffset:339.29}}
+.num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.num strong{font-size:3.5rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+.num span{font-size:.8rem;color:var(--muted);font-weight:600}
+.grade{font-weight:700;font-size:1.04rem;color:var(--fair)}
+.grade-note{font-size:.88rem;color:var(--muted);text-align:center;max-width:34ch}
+.sub-score{display:flex;align-items:center;gap:14px;width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:16px;background:var(--surface2);text-decoration:none;color:var(--fg);transition:border-color .3s,transform .3s cubic-bezier(.2,.8,.2,1)}
+.sub-score:hover{border-color:var(--gold-bright);transform:translateY(-2px)}
+.mini{position:relative;width:66px;height:66px;flex-shrink:0}
+.mini .track,.mini .val{stroke-width:8}
+.mini .val{fill:none;stroke:url(#ringPurple);stroke-linecap:round;stroke-dasharray:213.63;stroke-dashoffset:55.54;animation:mini 1.4s cubic-bezier(.16,1,.3,1) both .6s}
+@keyframes mini{from{stroke-dashoffset:213.63}}
+.mini strong{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;font-variant-numeric:tabular-nums}
+.sub-score .t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.sub-score .t b{font-size:.98rem}
+.sub-score .t span{font-size:.84rem;color:var(--muted)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;font-size:.76rem;color:var(--muted)}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle}
+@media (max-width:860px){.hero .inner{grid-template-columns:minmax(0,1fr);padding-block:36px 40px}}
+
+/* Sections */
+main{display:block}
+.sec{padding-block:60px;border-bottom:1px solid var(--line);scroll-margin-top:81px}
+.sec[data-group]{scroll-margin-top:133px}
+.sec[data-group]:not([data-sub]) .sec-head h2{font-size:clamp(1.25rem,2.3vw,1.55rem)} /* areas sit one step below chapters (D57) */
+.sec.alt{background:var(--bg2)}
+.sec .inner{display:flex;flex-direction:column;gap:20px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 20px}
+.title{display:flex;align-items:center;gap:14px;min-width:0}
+.tile{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:14px;background:var(--purple-soft);color:var(--purple);flex-shrink:0}
+.tile .ico{width:24px;height:24px}
+.tile.gold{background:var(--gold-soft);color:var(--gold)}
+.title > div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.weight{font-size:.8rem;color:var(--muted);font-weight:600}
+.pts{display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--muted)}
+.pts b{font-size:1.6rem;font-weight:800;color:var(--fg);font-variant-numeric:tabular-nums}
+.meter{width:110px;height:6px;border-radius:6px;background:var(--purple-soft);overflow:hidden}
+.meter i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--purple-2),var(--gold-bright))}
+.summary{color:var(--muted);font-size:1rem}
+/* Why-it-matters line sits under the area title, part of the heading */
+.dek{margin:6px 0 0;font-size:.95rem;line-height:1.55;color:var(--muted);max-width:68ch;text-wrap:pretty}
+.title:has(.dek){align-items:flex-start} .sec-head:has(.dek){align-items:flex-start}
+.jump{display:flex;flex-wrap:wrap;gap:8px}
+.jump a{display:inline-flex;gap:8px;align-items:center;min-height:40px;font-size:.86rem;font-weight:600;text-decoration:none;color:var(--fg);padding:7px 13px;border:1px solid var(--line);border-radius:99px;background:var(--surface);transition:border-color .2s,transform .2s}
+.jump a:hover{color:var(--gold);border-color:var(--gold-bright);transform:translateY(-1px)}
+.jump a .ico{width:16px;height:16px;color:var(--purple)}
+.jump a span{font-family:var(--f-mono);font-size:.76rem;color:var(--muted);font-weight:400}
+
+/* Tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:.9rem}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:.74rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--surface2)}
+tbody tr{transition:background-color .2s}
+tbody tr:hover{background:var(--surface2)}
+tr:last-child td{border-bottom:0}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700}
+td a{color:var(--fg);text-decoration:none;font-weight:700}
+td a:hover{color:var(--gold)}
+tfoot td{font-weight:800;font-size:1rem;border-top:1px solid var(--line);background:var(--surface2)}
+@media (max-width:640px){
+  .tbl{overflow:visible;border:0;background:transparent;border-radius:0}
+  .tbl table{min-width:0!important;font-size:.9rem}
+  .tbl thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .tbl tbody,.tbl tfoot{display:flex;flex-direction:column;gap:8px}
+  .tbl tfoot{margin-top:8px}
+  .tbl tr{display:flex;flex-direction:column;gap:5px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  .tbl td{border:0;padding:0;display:block;min-width:0}
+  .tbl td[data-label]::before{content:attr(data-label);display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-top:4px}
+  .tbl td:first-child{font-weight:700}
+  .tbl td:first-child::before{display:none}
+  .tbl td:empty{display:none}
+  .tbl code{word-break:normal;overflow-wrap:anywhere}
+}
+.rowbar{width:84px;height:6px;border-radius:6px;background:var(--purple-soft);overflow:hidden}
+.rowbar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--purple-2),var(--gold-bright))}
+/* Breakdown tables: section icon before each area, one line per row */
+.bd td:first-child a{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.bd td:first-child .ico{width:16px;height:16px;color:var(--purple);flex-shrink:0}
+.bd .rowbar{width:56px}
+.bd td,.bd th{white-space:nowrap}
+.bd table{min-width:0}
+.bd th,.bd td{padding-inline:10px}
+.bd th:first-child,.bd td:first-child{padding-left:14px}
+.bd tbody tr{cursor:pointer}
+.bd tbody tr:hover td:first-child a{color:var(--gold)}
+@media (max-width:640px){
+  .bd tbody tr{display:grid;grid-template-columns:3.6rem minmax(0,1fr) 4.6rem;align-items:center;gap:8px 12px}
+  .bd tbody td:last-child{justify-self:end}
+  .bd tbody td:first-child{grid-column:1/-1}
+  .bd td[data-label]::before{display:none}
+  .bd .rowbar{width:100%}
+}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;letter-spacing:.02em;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.pill .ico{width:13px;height:13px;stroke-width:2.2}
+/* Severity isn't a score: neutral pills with 1-3 bars (Low, Medium, High); only Critical is filled red. Red, orange and green stay for score bands (D55). */
+.pill.sev{background:var(--surface);color:var(--fg);box-shadow:inset 0 0 0 1px var(--line-strong);--b1:var(--line-strong);--b2:var(--line-strong);--b3:var(--line-strong)}
+.pill.sev::before{content:"";flex:none;width:11px;height:10px;background:linear-gradient(var(--b1),var(--b1)) 0 100%/3px 4px no-repeat,linear-gradient(var(--b2),var(--b2)) 4px 100%/3px 7px no-repeat,linear-gradient(var(--b3),var(--b3)) 8px 100%/3px 10px no-repeat}
+.pill.sev.low{--b1:currentColor}
+.pill.sev.med{--b1:currentColor;--b2:currentColor}
+.pill.sev.high,.pill.sev.crit{--b1:currentColor;--b2:currentColor;--b3:currentColor}
+.pill.sev.crit{background:var(--poor);color:#fff;box-shadow:none}
+:root[data-mode="dark"] .pill.sev.crit{color:#1a0b0b}
+.good{color:var(--good);background:var(--good-bg)} .fair{color:var(--fair);background:var(--fair-bg)} .poor{color:var(--poor);background:var(--poor-bg)} .tag{color:var(--purple-ink);background:var(--purple-soft)} .info{color:var(--muted);background:var(--surface2);border:1px solid var(--line)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:20px}
+.two > div{display:flex;flex-direction:column;gap:12px;min-width:0}
+.two h3{display:flex;align-items:center;gap:8px}
+.two h3 .ico{color:var(--purple)}
+
+/* Cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 22px;display:flex;flex-direction:column;gap:10px;min-width:0;box-shadow:0 1px 2px rgba(29,20,48,.03);transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .3s}
+.card .ch{display:flex;gap:12px;align-items:flex-start}
+.card .ci{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;flex-shrink:0}
+.card .ci .ico{width:19px;height:19px}
+.ci.poor{background:var(--poor-bg);color:var(--poor)} .ci.fair{background:var(--fair-bg);color:var(--fair)} .ci.info{background:var(--purple-soft);color:var(--purple);border:0} .ci.good{background:var(--good-bg);color:var(--good)}
+.card .ch > div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.card .tags{display:flex;flex-wrap:wrap;gap:6px}
+.card p,.card li{font-size:.93rem}
+.card .ev{color:var(--muted);font-size:.88rem}
+.card .fix{display:flex;gap:8px;align-items:flex-start;border-top:1px dashed var(--line);padding-top:10px;font-size:.91rem;max-width:none}
+.card .fix .ico{color:var(--purple);width:17px;height:17px;margin-top:3px}
+.card .fix b{color:var(--purple-ink)}
+.card.wide{grid-column:1/-1}
+ul.clean{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:5px}
+.uas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px}
+.ua{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--surface2);min-width:0}
+.ua h4{display:flex;align-items:center;gap:6px;margin:0 0 8px;font-size:.8rem;font-weight:700}
+.ua h4 .ico{width:16px;height:16px}
+.ua.ok h4{color:var(--good)} .ua.no h4{color:var(--poor)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-family:var(--f-mono);font-size:.74rem;padding:3px 8px;border-radius:6px;background:var(--surface);border:1px solid var(--line)}
+
+/* Checked and working */
+.ok-head{display:flex;align-items:center;gap:8px;margin-top:4px;font-weight:700;font-size:.96rem}
+.ok-head .ico{color:var(--good)}
+.ok-head span{font-size:.8rem;color:var(--muted);font-weight:500}
+.oks{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:8px;margin:0;padding:0;list-style:none}
+.oks li{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:.88rem;min-width:0;transition:border-color .25s}
+.oks li .ico{width:16px;height:16px;color:var(--good);stroke-width:2.2}
+.oks li span{min-width:0}
+
+/* Evidence lists */
+.factors{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;background:var(--surface);overflow:hidden}
+.factor{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:12px;align-items:start;padding:12px 14px;border-bottom:1px solid var(--line)}
+.factor:last-child{border-bottom:0}
+.factor .i{font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
+.factor b{display:block;font-size:.93rem}
+.factor small{display:block;color:var(--muted);font-size:.84rem;line-height:1.45;margin-top:2px}
+.factor small a{color:var(--muted)}
+.factor .tiers{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+
+/* Folding: evidence rows line up across both lists; findings open from their header row */
+@supports (grid-template-rows:subgrid){
+  @media (min-width:960px){
+    #factors .two{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:0}
+    #factors .two > div{display:grid;grid-row:span 10;grid-template-rows:subgrid;gap:0}
+    #factors .two h3{padding-bottom:12px}
+    #factors .factors{display:contents}
+    #factors .factor{background:var(--surface);border:1px solid var(--line);border-top:0}
+    #factors .factor:first-child{border-top:1px solid var(--line);border-radius:16px 16px 0 0}
+    #factors .factor:last-child,#factors .two:not(.all) .factor:nth-child(3){border-radius:0 0 16px 16px;border-bottom:1px solid var(--line)}
+  }
+}
+/* Two control families. Links that move you (jump chips, second row) are white outlined pills.
+   Toggles that show or hide content here are purple-tinted rectangles with the chevron in a disc;
+   solid purple means "open". */
+.fold-btn{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 16px 0 7px;border-radius:12px;border:1px solid transparent;background:var(--purple-soft);color:var(--purple-ink);font:700 .9rem var(--f-sans);cursor:pointer;touch-action:manipulation;transition:border-color .2s,background-color .2s,color .2s}
+.fold-btn:hover,.fold-hit:hover .fold-btn{border-color:var(--purple-2)}
+.fold-btn .ico{width:30px;height:30px;padding:6px;border-radius:9px;background:var(--surface);color:var(--purple);stroke-width:2.2;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.fold-btn[aria-expanded="true"]{background:var(--purple);color:var(--on-purple)}
+.fold-btn[aria-expanded="true"] .ico{transform:rotate(180deg)}
+.fold-btn small{font-weight:500;color:var(--muted);font-size:.84rem}
+.fold-btn[aria-expanded="true"] small{color:inherit;opacity:.85}
+.fold-hit{display:flex;flex-direction:column;gap:20px;cursor:pointer}
+.fold-hit:hover .sec-head h2{color:var(--gold)}
+.head-r{display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px;margin-left:auto}
+/* Desktop: one header row. A long title wraps inside its own column instead of pushing the score and toggle down. */
+@media (min-width:900px){.fold-hit .sec-head,#seo .sec-head,#beyond .sec-head{flex-wrap:nowrap}.fold-hit .sec-head .title,#seo .sec-head .title,#beyond .sec-head .title{flex:1 1 auto}.head-r{flex-shrink:0;flex-wrap:nowrap}.sec-head h2{text-wrap:balance}}
+.head-r .fold-btn{align-self:center}
+@media (min-width:641px){.head-r .fold-btn{width:300px}}
+.fold-btn small{white-space:nowrap}
+.fold:not(.open) .fold-in{padding-block:0}
+.sec:has(> .inner > .fold:not(.open)){padding-block:44px}
+@media (max-width:640px){.head-r{margin-left:0;width:100%;justify-content:space-between;flex-wrap:nowrap}.head-r .fold-btn small{display:none}}
+.fold{display:grid;grid-template-rows:0fr;margin-top:-20px;transition:grid-template-rows .4s cubic-bezier(.2,.8,.2,1)}
+.fold.open{grid-template-rows:1fr}
+.fold-in{min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:20px;padding:20px 4px 6px;margin-inline:-4px;visibility:hidden;transition:visibility 0s .4s}
+.fold.open .fold-in{visibility:visible;transition:none}
+.fold.open.settled .fold-in{overflow:visible}
+@media (max-width:520px){.factor{grid-template-columns:22px minmax(0,1fr)}.factor .tiers{grid-column:2;flex-direction:row;align-items:center}}
+
+/* Status cells */
+.st{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.84rem;white-space:nowrap}
+.st .ico{width:16px;height:16px;stroke-width:2.2}
+.st.y{color:var(--good)} .st.p{color:var(--fair)} .st.n{color:var(--poor)}
+
+/* Growth readiness overview */
+.areas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
+.area{display:flex;flex-direction:column;gap:8px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--surface);text-decoration:none;color:var(--fg);transition:border-color .25s,transform .25s cubic-bezier(.2,.8,.2,1)}
+.area:hover{border-color:var(--gold-bright);transform:translateY(-2px)}
+.area .top{display:flex;align-items:center;gap:10px}
+.area .top .ico{color:var(--purple)}
+.area .top b{font-size:.98rem}
+.area .sc{display:flex;align-items:baseline;gap:6px}
+.area .sc strong{font-size:1.7rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+.area .sc span{color:var(--muted);font-size:.86rem}
+.area p{font-size:.86rem;color:var(--muted)}
+
+/* Fix plan */
+.plan{display:flex;flex-direction:column;gap:10px;counter-reset:step;margin:0;padding:0;list-style:none}
+.plan li{counter-increment:step;display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:14px;align-items:start;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--surface);transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s}
+.plan li::before{content:counter(step);display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:10px;background:var(--gold-soft);color:var(--gold);font-weight:800;font-size:.95rem;font-variant-numeric:tabular-nums}
+.plan b{display:block;font-size:1rem;margin-bottom:3px}
+.plan p{font-size:.9rem;color:var(--muted)}
+.plan .plan-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:8px;font-size:.84rem;color:var(--muted)}
+.plan .plan-meta a{font-weight:600}
+.plan .effort{font-size:.72rem;font-weight:700;letter-spacing:.02em;padding:2px 8px;border-radius:6px;background:var(--surface2);box-shadow:inset 0 0 0 1px var(--line);color:var(--fg)}
+.gain{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.gain span{font-size:.76rem;font-weight:700;white-space:nowrap;padding:2px 9px;border-radius:99px;font-variant-numeric:tabular-nums}
+.g-seo{color:var(--gold);background:var(--gold-soft)} .g-ai{color:var(--purple-ink);background:var(--purple-soft)} .g-mk{color:var(--good);background:var(--good-bg)}
+@media (max-width:560px){.plan li{grid-template-columns:32px minmax(0,1fr)}.gain{grid-column:2;flex-direction:row;flex-wrap:wrap;align-items:center}}
+
+.sources{columns:2 320px;column-gap:28px;margin:0;padding-left:1.1em;font-size:.88rem}
+.sources li{break-inside:avoid;margin-bottom:6px}
+/* Footer: a dark band with the chapter bands' gold top line (D48) */
+footer.site{--fg:#f8fafc;--muted:#b4bccb;--line:#2a3446;--purple:#b39dfa;--gold:#ebc062;--gold-bright:#e6b94f;color:var(--fg);background:linear-gradient(#d9a63a 0 3px,#111827 3px);padding-block:40px 52px}
+:root[data-mode="dark"] footer.site{background:linear-gradient(#d9a63a 0 3px,#1f2838 3px)}
+footer.site .inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center;color:var(--muted);font-size:.88rem}
+@media (prefers-reduced-motion:reduce){.ring .val,.mini .val{animation:none}*{transition-duration:.01s!important}html{scroll-behavior:auto}.subnav{transition:none}}
+
+/* ===== Colour system: neutral paper, part hues for wayfinding, status colours for meaning ===== */
+[data-nav="seo"]{--hue:var(--seo);--hue-soft:var(--seo-soft)}
+[data-nav="ai"]{--hue:var(--ai);--hue-soft:var(--ai-soft)}
+[data-nav="beyond"]{--hue:var(--bey);--hue-soft:var(--bey-soft)}
+[data-nav="factors"],[data-nav="plan"]{--hue:var(--gold);--hue-soft:var(--gold-soft)}
+#breakdown .two > div:first-child,#factors .two > div:first-child{--hue:var(--seo);--hue-soft:var(--seo-soft)}
+#breakdown .two > div:last-child,#factors .two > div:last-child{--hue:var(--ai);--hue-soft:var(--ai-soft)}
+.sec .tile,.sec .tile.gold{background:var(--hue-soft);color:var(--hue)}
+.two h3 .ico,.bd td:first-child .ico,.jump a .ico,.area .top .ico{color:var(--hue)}
+/* Notes: quiet neutral panels, the icon carries the part hue */
+code{background:var(--surface2);border:1px solid var(--line)}
+.tag{color:var(--fg);background:var(--surface2);border:1px solid var(--line)}
+.ci.info{background:var(--hue-soft);color:var(--hue)}
+.card .fix .ico{color:var(--hue)} .card .fix b{color:var(--fg)}
+/* Second header row: the active chip takes its part's hue */
+.subnav a.active{background:var(--hue);border-color:var(--hue);color:#fff}
+:root[data-mode="dark"] .subnav a.active{color:#0c1018}
+.subnav.grp-seo{--hue:var(--seo)} .subnav.grp-beyond{--hue:var(--bey)} .subnav.grp-ai{--hue:var(--ai)}
+/* Hero: the AI and Beyond cues teach the colour code */
+.mini .val{stroke:url(#ringTeal)}
+.sub-score{--hue:var(--ai)}
+/* Status colours on every score and bar (80+ strong, 40-79 fair, under 40 weak) */
+.meter,.rowbar{background:var(--track)}
+.s-good .meter i,.rowbar.s-good i{background:var(--good)}
+.s-fair .meter i,.rowbar.s-fair i{background:var(--fair-fill)}
+.s-poor .meter i,.rowbar.s-poor i{background:var(--poor)}
+.pts.s-good b{color:var(--good)} .pts.s-fair b{color:var(--fair-fill)} .pts.s-poor b{color:var(--poor)}
+.area .sc strong.s-good{color:var(--good)} .area .sc strong.s-fair{color:var(--fair-fill)} .area .sc strong.s-poor{color:var(--poor)}
+/* Fix-plan gains use the part they lift */
+.g-seo{color:var(--seo);background:var(--seo-soft)} .g-ai{color:var(--ai);background:var(--ai-soft)} .g-mk{color:var(--bey);background:var(--bey-soft)}
+.card{box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.score-card{box-shadow:0 1px 2px rgba(16,24,40,.04),0 30px 60px -32px var(--shadow)}
+
+/* ===== Chapter bands: each menu section opens with a dark band (title, one-line summary, part score). Content below stays on light paper. ===== */
+.sec:has(> .inner > .chapter){padding-top:0;scroll-margin-top:64px}
+.chapter{--band:#111827;--band-ink:#f8fafc;--band-muted:#c3cad6;--hue-dark:#c9bbff;
+  border-image:linear-gradient(to bottom,#d9a63a 0 3px,var(--band) 3px) fill 0//0 100vw;padding-block:30px;margin-bottom:6px;color:var(--band-ink)}
+:root[data-mode="dark"] .chapter{--band:#1f2838}
+[data-nav="seo"] .chapter{--hue-dark:#8fb0ff} [data-nav="ai"] .chapter{--hue-dark:#5fd3e6} [data-nav="beyond"] .chapter{--hue-dark:#eb9cf5}
+[data-nav="factors"] .chapter,[data-nav="plan"] .chapter{--hue-dark:#ebc062}
+.chapter h2{color:var(--band-ink)}
+/* Brand gold as accent only: top hairline, icon ring, subtitle */
+.chapter .weight{color:#e3cf9f}
+.sec .chapter .tile,.sec .chapter .tile.gold{background:rgba(255,255,255,.09);color:var(--hue-dark);box-shadow:inset 0 0 0 1.5px rgba(217,166,58,.75)}
+.band-score{margin-left:auto;display:flex;align-items:baseline;gap:6px;color:var(--band-muted);font-size:.9rem;flex-shrink:0}
+.band-score b{font-size:2.1rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.band-score.s-good b{color:#74d39d} .band-score.s-fair b{color:#f0973c} .band-score.s-poor b{color:#ff9585}
+.chapter .band-score + .head-r{margin-left:8px}
+.chapter .fold-btn{background:rgba(255,255,255,.1);color:#fff;border-color:transparent}
+.chapter .fold-btn:hover{border-color:rgba(255,255,255,.45)}
+.chapter .fold-btn .ico{background:rgba(255,255,255,.14);color:#fff}
+.chapter .fold-btn small{color:var(--band-muted)}
+.chapter .fold-btn[aria-expanded="true"]{background:#fff;color:#111827}
+.chapter .fold-btn[aria-expanded="true"] .ico{background:#111827;color:#fff}
+.chapter .fold-btn[aria-expanded="true"] small{color:#475467}
+.chapter :focus-visible{outline-color:#fff}
+@media (max-width:640px){.chapter{padding-block:24px}.band-score{margin-left:0}.band-score b{font-size:1.7rem}}
+
+/* Hero: Growth readiness sub-score (plum, 25/100) */
+.sub-score.ec{--hue:var(--bey)}
+.sub-score.ec .mini .val{stroke:url(#ringPlum);stroke-dashoffset:108.95;animation:mini-ec 1.4s cubic-bezier(.16,1,.3,1) both .8s}
+@keyframes mini-ec{from{stroke-dashoffset:213.63}}
+/* Open toggles inside dark bands stay solid purple, like every other open toggle */
+.chapter .fold-btn[aria-expanded="true"]{background:var(--purple-2);color:#fff}
+.chapter .fold-btn[aria-expanded="true"] .ico{background:rgba(255,255,255,.18);color:#fff}
+.chapter .fold-btn[aria-expanded="true"] small{color:#ede9fe}
+
+/* The ring already shows the score, so the title's repeat stays quiet */
+.sub-score .t b .of{display:inline;font-weight:500;color:var(--muted);font-size:inherit;white-space:nowrap}
+/* Hero mini scores take their status colour; rings keep the part hue */
+.mini strong.s-good{color:var(--good)} .mini strong.s-fair{color:var(--fair-fill)} .mini strong.s-poor{color:var(--poor)}
+
+/* Keyword search: a panel under the header; every result is an ordinary in-page link */
+.search-panel{position:absolute;left:0;right:0;top:100%;background:var(--glass-panel);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);border-bottom:1px solid var(--line);box-shadow:0 24px 40px -24px var(--shadow);z-index:3}
+.search-panel .inner{display:flex;flex-direction:column;gap:8px;padding-block:14px 16px}
+.sp-field{display:flex;align-items:center;gap:10px;height:52px;padding:0 14px;border:1px solid var(--line-strong);border-radius:14px;background:var(--bg)}
+.sp-field:focus-within{border-color:var(--purple-2);box-shadow:0 0 0 3px var(--purple-soft)}
+.sp-field .ico{width:20px;height:20px;color:var(--muted);flex-shrink:0}
+.sp-field input{flex:1;min-width:0;height:100%;border:0;background:transparent;color:var(--fg);font:500 1rem var(--f-sans);outline:none}
+.sp-field input::placeholder{color:var(--muted);opacity:.8}
+.sp-field kbd{font:600 .72rem var(--f-mono);color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 6px;flex-shrink:0}
+.sp-status{margin:0;font-size:.82rem;color:var(--muted);max-width:none}
+.sp-status:empty{display:none}
+.sp-results{list-style:none;margin:0;padding:0;max-height:min(60vh,520px);overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:2px}
+.sp-results:empty{display:none}
+.sp-results a{display:grid;grid-template-columns:20px minmax(0,1fr);gap:2px 12px;padding:10px 12px;border-radius:10px;color:var(--fg);text-decoration:none}
+.sp-results a .ico{grid-row:span 2;width:18px;height:18px;margin-top:2px;color:var(--hue)}
+.sp-results .where{font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.sp-results .what{font-size:.92rem;line-height:1.45;color:var(--muted)}
+.sp-results .what b{color:var(--fg);font-weight:700}
+.sp-results a:hover,.sp-results a[aria-selected="true"]{background:var(--gold-soft)}
+.sp-results a:hover .what b,.sp-results a[aria-selected="true"] .what b{color:var(--gold)}
+.sp-results mark{background:color-mix(in srgb,var(--gold-bright) 40%,transparent);color:inherit;border-radius:3px;padding:0 1px}
+/* The matched item glows gold for a moment after the jump */
+.q-flash{animation:qflash 2.6s ease-out}
+@keyframes qflash{0%,45%{background-color:var(--gold-soft);box-shadow:0 0 0 3px var(--gold-bright)}100%{box-shadow:0 0 0 3px transparent}}
+@media (max-width:640px){.sp-field kbd{display:none}.sp-results{max-height:calc(100vh - 190px)}}
+
+/* Hero scorecard is dark, like the chapter bands, so the headline score is the strongest object on the first screen.
+   Tokens are re-scoped on the card so the ring, mini cards, legend and hint all follow. */
+.score-card{--surface:#111827;--surface2:#1a2333;--fg:#f8fafc;--muted:#b4bccb;--line:#2a3446;--purple-soft:#2a1c48;
+  --good:#74d39d;--fair:#ffad66;--fair-fill:#f0973c;--poor:#ff9585;--gold:#ebc062;--gold-soft:#372a12;
+  color:var(--fg);border-color:#111827;background:linear-gradient(#d9a63a 0 3px,var(--surface) 3px);
+  box-shadow:0 2px 4px rgba(16,24,40,.08),0 36px 70px -30px rgba(17,24,39,.55)}
+:root[data-mode="dark"] .score-card{--surface:#1f2838;--surface2:#263043;--line:#33405a;border-color:#33405a}
+.score-card .sub-score:hover{border-color:#d9a63a}
+
+/* Methodology is reference material, so it sits with the utility buttons and FIX plan stays the last text link.
+   The book icon widens to show its name on hover or keyboard focus; the phone menu keeps the full item. */
+/* Methodology label: a tooltip under the book, so the menu never shifts (D56) */
+.meth-btn{text-decoration:none;white-space:nowrap}
+/* Every header icon button names itself in the same dark tooltip on hover or keyboard focus (D61). Hidden while its own panel is open, and on touch screens. */
+.bar .icon-btn{position:relative}
+.icon-btn .lbl{position:absolute;white-space:nowrap;z-index:2;top:calc(100% + 8px);right:0;padding:6px 10px;border-radius:8px;background:#111827;color:#fff;border:1px solid rgba(255,255,255,.14);font-size:.78rem;font-weight:600;box-shadow:0 8px 24px -10px rgba(0,0,0,.4);opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity .16s,transform .2s cubic-bezier(.2,.8,.2,1)}
+.icon-btn:hover .lbl,.icon-btn:focus-visible .lbl{opacity:1;transform:none}
+.icon-btn[aria-expanded="true"] .lbl{opacity:0}
+.icon-btn .lbl kbd{font:600 .72rem var(--f-mono);padding:1px 5px;margin-left:6px;border-radius:4px;border:1px solid rgba(255,255,255,.28);color:#d0d5dd}
+@media (hover:none){.icon-btn .lbl{display:none}}
+.meth-btn:hover{color:var(--gold);border-color:var(--gold-bright);background:var(--surface)}
+.meth-btn.active{color:var(--gold);background:var(--gold-soft);border-color:transparent}
+@media (prefers-reduced-motion:reduce){.icon-btn .lbl{transition:none}}
+
+/* Inside the dark scorecard, every ring has a light centre (light mode), so the numbers read as the content; the mini cards stay dark. */
+:root:not([data-mode="dark"]) .score-card .ring .num,
+:root:not([data-mode="dark"]) .score-card .mini strong{--surface2:#f2f4f7;--fg:#101828;--muted:#475467;--line:#e4e7ec;
+  --good:#1d7a45;--fair:#b04a06;--fair-fill:#d4700a;--poor:#b42318;--gold:#8f6310;--gold-soft:#fcf3dc;border-radius:50%;background:#ffffff;box-shadow:0 6px 18px -8px rgba(0,0,0,.45)}
+:root:not([data-mode="dark"]) .score-card .ring .num{inset:13%;color:var(--fg)}
+:root:not([data-mode="dark"]) .score-card .mini strong{inset:15%}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="ringGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2cf73"/><stop offset=".5" stop-color="#d9a63a"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+    <linearGradient id="ringPurple" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b79cff"/><stop offset="1" stop-color="#6d28d9"/></linearGradient>
+    <linearGradient id="ringPlum" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0abfc"/><stop offset="1" stop-color="#a21caf"/></linearGradient>
+    <linearGradient id="ringTeal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#67e8f9"/><stop offset="1" stop-color="#0e7490"/></linearGradient>
+    <linearGradient id="tileG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#2e0b5c"/></linearGradient>
+    <linearGradient id="goldG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7dc8f"/><stop offset="1" stop-color="#c8952c"/></linearGradient>
+    <!-- One icon set: 24px grid, 1.8 stroke, round caps (Lucide-style, drawn for this report) -->
+    <symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="14" height="14" rx="2"/><path d="M4 16a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+    <symbol id="i-type" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></symbol>
+    <symbol id="i-braces" viewBox="0 0 24 24"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1M16 21h1a2 2 0 0 0 2-2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></symbol>
+    <symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3 1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 3v4M17 5h4M5 17v4M3 19h4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M8 17v-6M13 17V7M18 17v-4"/></symbol>
+    <symbol id="i-plug" viewBox="0 0 24 24"><path d="M12 22v-5M9 8V2M15 8V2M18 8v5a6 6 0 0 1-12 0V8z"/></symbol>
+    <symbol id="i-cookie" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5h.01M16 15.5h.01M12 12h.01M11 17h.01M7 14h.01"/></symbol>
+    <symbol id="i-a11y" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.5"/><path d="M5 8.5 12 10l7-1.5M12 10v4.5M9 21l3-6.5 3 6.5"/></symbol>
+    <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12 2H2v10l9.29 9.29a1 1 0 0 0 1.41 0l8.6-8.6a1 1 0 0 0 0-1.41z"/><path d="M7 7h.01"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2 2h2l2.7 12.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L22 7H5.1"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-chevs" viewBox="0 0 24 24"><path d="m7 6 5 5 5-5M7 13l5 5 5-5"/></symbol>
+    <symbol id="i-check-c" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></symbol>
+    <symbol id="i-half" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/></symbol>
+    <symbol id="i-lightbulb" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V16h8v-1.3A7 7 0 0 0 12 2z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M3 9 4.5 4h15L21 9M3 9v11h18V9M3 9h18M9 20v-6h6v6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header gutter">
+  <div class="inner bar">
+    <a class="brand" href="#score" aria-label="24home SEO check, back to top"><span class="wordmark" translate="no">24home<span> · SEO check</span></span></a>
+    <nav class="nav" aria-label="Report sections">
+      <a href="#score" data-nav="score">Scorecard</a>
+      <a href="#seo" data-nav="seo">SEO readiness</a>
+      <a href="#ai" data-nav="ai">AI readiness</a>
+      <a href="#beyond" data-nav="beyond">Growth readiness</a>
+      <a class="cta" href="#plan" data-nav="plan">FIX plan</a>
+    </nav>
+    <a class="icon-btn meth-btn" href="#factors" data-nav="factors" aria-label="Methodology"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><span class="lbl" aria-hidden="true">Methodology</span></a>
+    <button class="icon-btn" id="searchBtn" type="button" aria-expanded="false" aria-controls="searchPanel" aria-label="Search the report" aria-keyshortcuts="/"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><span class="lbl" aria-hidden="true">Search<kbd>/</kbd></span></button>
+    <button class="icon-btn" id="modeBtn" type="button" aria-label="Switch to dark mode"><svg class="ico" aria-hidden="true"><use id="modeUse" href="#i-moon"/></svg><span class="lbl" id="modeTip" aria-hidden="true">Dark mode</span></button>
+    <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel"><svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg><span class="t">Sections</span></button>
+  </div>
+  <nav class="subnav gutter" id="subnav" aria-label="Sections in this group" hidden>
+    <div class="inner" id="subnavInner"></div>
+  </nav>
+  <div class="menu-panel gutter" id="menuPanel" hidden>
+    <div class="inner">
+      <span class="grp">Overview</span>
+      <a href="#score"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg>Scorecard<span class="s">70 · 74 · 49</span></a>
+      <span class="grp">SEO readiness</span>
+      <a href="#rendering"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg>Rendering<span class="s">20/20</span></a>
+      <a href="#duplicates"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg>Duplicate URLs<span class="s">4/9</span></a>
+      <a href="#facets"><svg class="ico" aria-hidden="true"><use href="#i-filter"/></svg>Facets &amp; variants<span class="s">4/9</span></a>
+      <a href="#linking"><svg class="ico" aria-hidden="true"><use href="#i-link"/></svg>Internal linking<span class="s">11/12</span></a>
+      <a href="#titles"><svg class="ico" aria-hidden="true"><use href="#i-type"/></svg>Titles &amp; headings<span class="s">6/10</span></a>
+      <a href="#schema"><svg class="ico" aria-hidden="true"><use href="#i-braces"/></svg>Structured data<span class="s">5/10</span></a>
+      <a href="#speed"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg>Page speed<span class="s">3/8</span></a>
+      <a href="#status"><svg class="ico" aria-hidden="true"><use href="#i-activity"/></svg>Status codes<span class="s">8/8</span></a>
+      <a href="#basics"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>Mobile &amp; HTTPS<span class="s">6/8</span></a>
+      <a href="#sitemaps"><svg class="ico" aria-hidden="true"><use href="#i-map"/></svg>Sitemaps<span class="s">3/6</span></a>
+      <span class="grp">AI readiness</span>
+      <a href="#ai"><svg class="ico" aria-hidden="true"><use href="#i-sparkles"/></svg>AI readiness<span class="s">74</span></a>
+      <a href="#ai-html"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg>HTML for AI crawlers<span class="s">23/23</span></a>
+      <a href="#ai-access"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>AI crawler access<span class="s">11/15</span></a>
+      <a href="#ai-index"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg>Search indexability<span class="s">8/15</span></a>
+      <a href="#ai-extract"><svg class="ico" aria-hidden="true"><use href="#i-type"/></svg>Extractable content<span class="s">10/12</span></a>
+      <a href="#ai-feeds"><svg class="ico" aria-hidden="true"><use href="#i-cart"/></svg>Product feeds<span class="s">6/10</span></a>
+      <a href="#ai-fresh"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>Freshness signals<span class="s">4/7</span></a>
+      <a href="#ai-entity"><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg>Entity &amp; trust<span class="s">3/5</span></a>
+      <a href="#ai-agent"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg>Agent readiness<span class="s">3/4</span></a>
+      <a href="#ai-speed"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg>Speed for AI fetchers<span class="s">2/2</span></a>
+      <a href="#ai-llms"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg>llms.txt &amp; AI files<span class="s">0/3</span></a>
+      <span class="grp">Growth readiness</span>
+      <a href="#beyond"><svg class="ico" aria-hidden="true"><use href="#i-cart"/></svg>Growth readiness<span class="s">49</span></a>
+      <a href="#tracking"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg>Tracking<span class="s">72</span></a>
+      <a href="#integrations"><svg class="ico" aria-hidden="true"><use href="#i-plug"/></svg>Integrations<span class="s">55</span></a>
+      <a href="#consent"><svg class="ico" aria-hidden="true"><use href="#i-cookie"/></svg>Consent<span class="s">5</span></a>
+      <a href="#a11y"><svg class="ico" aria-hidden="true"><use href="#i-a11y"/></svg>Accessibility<span class="s">63</span></a>
+      <span class="grp">Next steps</span>
+      <a class="cta" href="#plan"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg>FIX plan</a>
+      <span class="grp">Methodology</span>
+      <a href="#factors"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg>What matters in 2026</a>
+      <a href="#sources"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg>Methodology &amp; Sources</a>
+      <span class="grp">Display</span>
+      <button class="mode-row" id="modeRow" type="button" role="switch" aria-checked="false"><svg class="ico" aria-hidden="true"><use id="modeRowUse" href="#i-moon"/></svg>Dark mode<span class="sw" aria-hidden="true"></span></button>
+    </div>
+  </div>
+  <div class="search-panel gutter" id="searchPanel" role="dialog" aria-label="Search the report" hidden>
+    <div class="inner">
+      <div class="sp-field"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><input id="searchInput" type="search" placeholder="Search the report, e.g. canonical, robots.txt, GA4" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="searchResults" aria-autocomplete="list" aria-label="Keyword"><kbd>Esc</kbd></div>
+      <p class="sp-status" id="searchStatus" aria-live="polite"></p>
+      <ul class="sp-results" id="searchResults" role="listbox" aria-label="Matches"></ul>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero gutter" id="score" data-nav="score">
+  <div class="inner">
+    <div>
+      <h1>Can <span class="brand-name" translate="no">24home</span> <em>rank, get cited and turn visits into sales?</em></h1>
+      <div class="byline"><span><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg>22 October 2026</span><span><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg>SEO infrastructure check</span></div>
+      <p class="lede">We tested the live 24home.bg shop (WordPress and WooCommerce) across eight page types, from the home page to the cart. Scores are weighted by what 2026 evidence says moves rankings and AI citations.</p>
+      <div class="facts">
+        <span class="fact"><b>24home.bg</b> · BG · 732 URLs</span>
+        <span class="fact"><b>26</b> crawler agents tested</span>
+        <span class="fact"><b>8</b> page templates parsed</span>
+        <span class="fact"><b>6</b> pages axe-tested</span>
+        <span class="fact"><b>4</b> Lighthouse runs</span>
+      </div>
+    </div>
+    <div class="score-card">
+      <span class="cap">SEO readiness score</span>
+      <a class="ring" href="#breakdown" aria-label="SEO score 70 out of 100, see the score breakdown">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="54"/><circle class="val" cx="60" cy="60" r="54"/></svg>
+        <div class="num" aria-hidden="true"><strong id="scoreNum">70</strong><span>of 100</span><span class="see">See breakdown</span></div>
+      </a>
+      <div class="grade">Fair · a strong base, mostly config fixes</div>
+      <p class="grade-note">The first four fixes in the plan lift this to about 89.</p>
+      <a class="sub-score" href="#ai" aria-label="AI readiness score 74 out of 100, jump to section">
+        <div class="mini"><svg viewBox="0 0 80 80" aria-hidden="true"><circle class="track" cx="40" cy="40" r="34"/><circle class="val" cx="40" cy="40" r="34"/></svg><strong id="aiNum" class="s-fair">74</strong></div>
+        <div class="t"><b>AI readiness <span class="of">· 74/100</span></b><span>Every AI crawler gets the full shop. Points go on duplicates, entity and freshness data.</span></div>
+      </a>
+      <a class="sub-score ec" href="#beyond" aria-label="Growth readiness score 49 out of 100, jump to section">
+        <div class="mini"><svg viewBox="0 0 80 80" aria-hidden="true"><circle class="track" cx="40" cy="40" r="34"/><circle class="val" cx="40" cy="40" r="34"/></svg><strong id="ecNum" class="s-fair">49</strong></div>
+        <div class="t"><b>Growth readiness <span class="of">· 49/100</span></b><span>Tracking works, but there is no consent banner and every tag fires before a choice.</span></div>
+      </a>
+      <div class="legend"><span><i style="background:var(--good)"></i>80+ strong</span><span><i style="background:var(--fair-fill)"></i>40–79 fair</span><span><i style="background:var(--poor)"></i>under 40 weak</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec gutter" id="breakdown" data-nav="score">
+  <div class="inner">
+    <div class="chapter"><div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></span><div><h2>Score breakdown</h2><span class="weight">Each table adds up to 100 when nothing is wrong</span></div></div></div></div>
+    <p class="summary">Weights come from our 2026 <a href="#factors">evidence review</a> near the end of the report. Rows are in order of weight, and each one links to its findings. The Growth readiness score is separate and is not included here.</p>
+    <div class="two">
+      <div>
+        <h3><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg>SEO readiness · 70 / 100</h3>
+        <div class="tbl bd"><table>
+          <thead><tr><th>Area</th><th>Score</th><th><span class="sr">Bar</span></th><th>Rating</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#rendering"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg>Rendering</a></td><td class="n">20 / 20</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
+            <tr><td><a href="#duplicates"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg>Duplicate URLs</a></td><td class="n">4 / 9</td><td><div class="rowbar"><i style="width:44%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
+            <tr><td><a href="#facets"><svg class="ico" aria-hidden="true"><use href="#i-filter"/></svg>Facets &amp; variants</a></td><td class="n">4 / 9</td><td><div class="rowbar"><i style="width:44%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
+            <tr><td><a href="#linking"><svg class="ico" aria-hidden="true"><use href="#i-link"/></svg>Internal linking</a></td><td class="n">11 / 12</td><td><div class="rowbar"><i style="width:92%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
+            <tr><td><a href="#titles"><svg class="ico" aria-hidden="true"><use href="#i-type"/></svg>Titles &amp; headings</a></td><td class="n">6 / 10</td><td><div class="rowbar"><i style="width:60%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
+            <tr><td><a href="#schema"><svg class="ico" aria-hidden="true"><use href="#i-braces"/></svg>Structured data</a></td><td class="n">5 / 10</td><td><div class="rowbar"><i style="width:50%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
+            <tr><td><a href="#speed"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg>Page speed</a></td><td class="n">3 / 8</td><td><div class="rowbar"><i style="width:38%"></i></div></td><td><span class="pill poor">Weak</span></td></tr>
+            <tr><td><a href="#status"><svg class="ico" aria-hidden="true"><use href="#i-activity"/></svg>Status codes</a></td><td class="n">8 / 8</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
+            <tr><td><a href="#basics"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>Mobile parity</a></td><td class="n">4 / 4</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
+            <tr><td><a href="#basics"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>HTTPS &amp; security</a></td><td class="n">0 / 2</td><td><div class="rowbar"><i style="width:0%"></i></div></td><td><span class="pill poor">Weak</span></td></tr>
+            <tr><td><a href="#basics"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>URL structure</a></td><td class="n">2 / 2</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
+            <tr><td><a href="#sitemaps"><svg class="ico" aria-hidden="true"><use href="#i-map"/></svg>Sitemaps</a></td><td class="n">3 / 6</td><td><div class="rowbar"><i style="width:50%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
+          </tbody>
+          <tfoot><tr><td>Total</td><td class="n">70 / 100</td><td colspan="2"></td></tr></tfoot>
+        </table></div>
+      </div>
+      <div>
+        <h3><svg class="ico" aria-hidden="true"><use href="#i-sparkles"/></svg>AI visibility readiness · 74 / 100</h3>
+        <div class="tbl bd"><table>
+          <thead><tr><th>Area</th><th>Score</th><th><span class="sr">Bar</span></th><th>Rating</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#ai-html"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg>HTML for AI crawlers</a></td><td class="n">23 / 23</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
+            <tr><td><a href="#ai-access"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>AI crawler access</a></td><td class="n">11 / 15</td><td><div class="rowbar"><i style="width:73%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
+            <tr><td><a href="#ai-index"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg>Search indexability</a></td><td class="n">8 / 15</td><td><div class="rowbar"><i style="width:53%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
+            <tr><td><a href="#ai-extract"><svg class="ico" aria-hidden="true"><use href="#i-type"/></svg>Extractable content</a></td><td class="n">10 / 12</td><td><div class="rowbar"><i style="width:83%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
+            <tr><td><a href="#ai-feeds"><svg class="ico" aria-hidden="true"><use href="#i-cart"/></svg>Product feeds</a></td><td class="n">6 / 10</td><td><div class="rowbar"><i style="width:60%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
+            <tr><td><a href="#ai-fresh"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>Freshness signals</a></td><td class="n">4 / 7</td><td><div class="rowbar"><i style="width:57%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
+            <tr><td><a href="#ai-entity"><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg>Entity &amp; trust</a></td><td class="n">3 / 5</td><td><div class="rowbar"><i style="width:60%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
+            <tr><td><a href="#ai-snippet"><svg class="ico" aria-hidden="true"><use href="#i-tag"/></svg>Snippet controls</a></td><td class="n">4 / 4</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
+            <tr><td><a href="#ai-agent"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg>Agent readiness</a></td><td class="n">3 / 4</td><td><div class="rowbar"><i style="width:75%"></i></div></td><td><span class="pill fair">Fair</span></td></tr>
+            <tr><td><a href="#ai-speed"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg>Speed for AI fetchers</a></td><td class="n">2 / 2</td><td><div class="rowbar"><i style="width:100%"></i></div></td><td><span class="pill good">Strong</span></td></tr>
+            <tr><td><a href="#ai-llms"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg>llms.txt &amp; AI files</a></td><td class="n">0 / 3</td><td><div class="rowbar"><i style="width:0%"></i></div></td><td><span class="pill poor">Weak</span></td></tr>
+          </tbody>
+          <tfoot><tr><td>Total</td><td class="n">74 / 100</td><td colspan="2"></td></tr></tfoot>
+        </table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEO readiness, ordered by weight ===== -->
+
+<section class="sec gutter" id="seo" data-nav="seo">
+  <div class="inner">
+    <div class="chapter"><div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg></span><div><h2>SEO readiness</h2><span class="weight">Ten areas, ordered by weight</span></div></div><div class="band-score s-fair"><b>70</b><span>/ 100</span></div></div></div>
+    <p class="summary">Click an area's header to open its issues, followed by what we checked that works. The shop's foundations are strong: every crawler gets the full page, and status codes are right. Most lost points come from missing SEO configuration, which WordPress leaves to a plugin. Once you scroll past this point, a second row in the header lets you jump between the areas.</p>
+    <div class="jump">
+      <a href="#rendering"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg>Rendering <span>20/20</span></a>
+      <a href="#duplicates"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg>Duplicate URLs <span>4/9</span></a>
+      <a href="#facets"><svg class="ico" aria-hidden="true"><use href="#i-filter"/></svg>Facets &amp; variants <span>4/9</span></a>
+      <a href="#linking"><svg class="ico" aria-hidden="true"><use href="#i-link"/></svg>Internal linking <span>11/12</span></a>
+      <a href="#titles"><svg class="ico" aria-hidden="true"><use href="#i-type"/></svg>Titles &amp; headings <span>6/10</span></a>
+      <a href="#schema"><svg class="ico" aria-hidden="true"><use href="#i-braces"/></svg>Structured data <span>5/10</span></a>
+      <a href="#speed"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg>Page speed <span>3/8</span></a>
+      <a href="#status"><svg class="ico" aria-hidden="true"><use href="#i-activity"/></svg>Status codes <span>8/8</span></a>
+      <a href="#basics"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>Mobile &amp; HTTPS <span>6/8</span></a>
+      <a href="#sitemaps"><svg class="ico" aria-hidden="true"><use href="#i-map"/></svg>Sitemaps <span>3/6</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec gutter alt" id="rendering" data-nav="seo" data-group="seo">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg></span><div><h2>Crawlability &amp; rendering</h2><p class="dek">Nothing else matters if the crawler can't see the content. Google recommends server-side rendering, and most AI crawlers don't run JavaScript at all.</p></div></div><div class="pts"><b>20</b>/ 20<div class="meter"><i style="width:100%"></i></div></div></div>
+    <p class="summary">Every visitor and every crawler gets the same server-rendered WooCommerce page, about 325 KB with products, prices, links and Product JSON-LD. We fetched the same product URL as 26 user agents, with and without a cache-busting parameter.</p>
+    <div class="cards">
+      <article class="card wide">
+        <div class="ch"><span class="ci good"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg></span><div><div class="tags"><span class="pill info">Note</span></div><h3>25 of 26 agents get the full page</h3></div></div>
+        <div class="uas">
+          <div class="ua ok"><h4><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Gets full HTML (324–328 KB)</h4><div class="chips"><span>Chrome desktop</span><span>Chrome mobile</span><span>Googlebot</span><span>Google-InspectionTool</span><span>GoogleOther</span><span>bingbot</span><span>YandexBot</span><span>Applebot</span><span>DuckDuckBot</span><span>OAI-SearchBot</span><span>ChatGPT-User</span><span>GPTBot</span><span>Claude-SearchBot</span><span>Claude-User</span><span>ClaudeBot</span><span>PerplexityBot</span><span>Perplexity-User</span><span>facebookexternalhit</span><span>Twitterbot</span><span>LinkedInBot</span><span>Chrome-Lighthouse</span><span>AhrefsBot</span><span>SemrushBot</span><span>Screaming Frog</span><span>curl</span></div></div>
+          <div class="ua no"><h4><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Blocked by the firewall</h4><div class="chips"><span>meta-externalagent (HTTP 412)</span></div></div>
+        </div>
+        <p>This is the setup both search engines and AI assistants need, and many shop builders don't manage it. The one block, Meta's crawler, is an access choice rather than a rendering problem: see <a href="#ai-access">AI crawler access</a>.</p>
+      </article>
+    </div>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>6 checks</span></div>
+    <ul class="oks">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Browsers and bots get the same title, canonical, content and JSON-LD</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Product JSON-LD is in the first HTML response, not injected later</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Links are real <code>&lt;a href&gt;</code> elements, not JS-only clicks</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Page cache answers in 0.03–0.08 s; a cache miss takes 1.2–1.6 s</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Correct <code>lang="bg-BG"</code> in the server HTML</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Social previews (Facebook, LinkedIn, Twitter) get the full page</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec gutter" id="duplicates" data-nav="seo" data-group="seo">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg></span><div><h2>Canonicals &amp; duplicate URLs</h2><p class="dek">Since Dec 2025, Google has said canonicals and <code>noindex</code> must be right in the first HTML response. Every duplicate splits ranking signals and wastes crawl budget.</p></div></div><div class="pts"><b>4</b>/ 9<div class="meter"><i style="width:44%"></i></div></div></div>
+    <div class="cards">
+      <article class="card">
+        <div class="ch"><span class="ci poor"><svg class="ico" aria-hidden="true"><use href="#i-alert"/></svg></span><div><div class="tags"><span class="pill sev high">High</span></div><h3>Categories and archives have no canonical</h3></div></div>
+        <ul class="clean">
+          <li><b>Products, posts, pages and home:</b> self-canonical. WordPress adds these by itself.</li>
+          <li><b>Product categories</b> (<code>/продукти/перголи/</code>, <code>/продукти/оранжерии/</code>) and other taxonomy archives: no canonical. WordPress leaves archives to an SEO plugin, and the shop has none.</li>
+          <li>In a 14-URL sitemap sample, the 2 taxonomy pages were the only ones without a self-canonical.</li>
+        </ul>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> install one SEO plugin (Rank Math or Yoast). It adds self-canonicals to categories, tags and brand archives, and handles the title, description, schema and sitemap fixes below.</span></p>
+      </article>
+      <article class="card">
+        <div class="ch"><span class="ci poor"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg></span><div><div class="tags"><span class="pill sev high">High</span></div><h3>Every page also answers on http://</h3></div></div>
+        <p>Only the home page redirects from <code>http://</code> to <code>https://</code>. The sampled product page answers 200 on both, with no redirect, so every URL exists twice. The canonical points to https and limits the damage, but categories have no canonical.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> a site-wide 301 from http to https at the server or host level, then HSTS (see <a href="#basics">Mobile &amp; HTTPS</a>).</span></p>
+      </article>
+    </div>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>6 checks</span></div>
+    <ul class="oks">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><code>www.24home.bg</code> 301-redirects to the bare domain in one hop</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>A missing trailing slash 301-redirects to the slash form</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Unknown parameters on products keep the canonical to the clean URL</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Upper-case paths return 404, so there are no case duplicates</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Products, posts and pages carry an absolute self-canonical</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>No stray <code>noindex</code> on indexable pages</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec gutter alt" id="facets" data-nav="seo" data-group="seo">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-filter"/></svg></span><div><h2>Facets, filters &amp; variants</h2><p class="dek">On e-commerce sites, filters for brand, attribute, price and sort can multiply a catalogue into millions of URLs. This is where most crawl traps and duplicate clusters come from.</p></div></div><div class="pts"><b>4</b>/ 9<div class="meter"><i style="width:44%"></i></div></div></div>
+    <div class="tbl"><table>
+      <thead><tr><th>URL pattern on <code>/продукти/перголи/</code> (as Googlebot)</th><th>Response</th><th>robots.txt</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td><code>?orderby=price</code>, <code>?orderby=popularity</code></td><td>200, full list, no canonical, no noindex</td><td>Not blocked</td><td><span class="st n"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Open</span></td></tr>
+        <tr><td><code>?filter_марка=sojag</code> (brand filter)</td><td>200, filtered list, no canonical, no noindex</td><td>Not blocked</td><td><span class="st n"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Open</span></td></tr>
+        <tr><td><code>?min_price=100&amp;max_price=500</code></td><td>200, filtered list, no canonical, no noindex</td><td>Not blocked</td><td><span class="st n"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Open</span></td></tr>
+        <tr><td><code>?utm_source=</code>, <code>?gclid=</code></td><td>200, the same cached page, no canonical</td><td>Not blocked</td><td><span class="st n"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Duplicate</span></td></tr>
+        <tr><td><code>?paged=2</code></td><td>301 to <code>/page/2/</code></td><td>n/a</td><td><span class="st y"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Clean</span></td></tr>
+        <tr><td><code>?paged=999</code>, <code>/page/99/</code> (past the end)</td><td>404</td><td>n/a</td><td><span class="st y"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Correct</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="cards">
+      <article class="card">
+        <div class="ch"><span class="ci poor"><svg class="ico" aria-hidden="true"><use href="#i-alert"/></svg></span><div><div class="tags"><span class="pill sev high">High</span></div><h3>Sort, brand and price URLs are open to crawling</h3></div></div>
+        <p>Every sort order, brand filter and price range is its own indexable URL with a full product list, and none says which page is the original. robots.txt only blocks add-to-cart links. With Filter Everything Pro installed, filters can combine into thousands of near-identical pages per category.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> canonical to the clean category on sort and price URLs, and <code>noindex, follow</code> on filter combinations that aren't chosen landing pages. Add robots.txt rules only after Google has dropped them, or it will never see the <code>noindex</code>.</span></p>
+      </article>
+      <article class="card">
+        <div class="ch"><span class="ci poor"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg></span><div><div class="tags"><span class="pill sev med">Medium</span></div><h3>The page cache serves an ad-click copy of Pergolas</h3></div></div>
+        <p>The cached <code>/продукти/перголи/</code> page carries a Google Ads click ID (<code>gclid=EAIaIQob…</code>) and <code>utm</code> tags inside its pagination links, three times on the page. Every visitor and crawler gets this copy, and the same copy answers <code>?gclid=</code> and <code>?utm_source=</code>. Googlebot follows those links and finds new parameter URLs.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> purge the cache, and set the cache plugin to ignore <code>gclid</code>, <code>utm_*</code> and <code>fbclid</code> in its cache key and in generated links.</span></p>
+      </article>
+      <article class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-tag"/></svg></span><div><div class="tags"><span class="pill sev low">Low</span></div><h3>No brand or filter landing pages</h3></div></div>
+        <p>Searches like "Sojag пергола" or "поликарбонатна оранжерия 3х4" have no page of their own. The brand taxonomy (<code>pa_марка</code>) has a sitemap entry, but its file returns 404 (see <a href="#sitemaps">Sitemaps</a>). Filter Everything Pro can publish chosen filter sets as SEO pages; none are in use.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> publish a few brand × category pages with their own title, text, canonical and sitemap entry. Keep every other combination out of the index.</span></p>
+      </article>
+    </div>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>4 checks</span></div>
+    <ul class="oks">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Variable products are one product with options and one URL, not duplicate products</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Pages past the end return 404 (<code>?paged=999</code>, <code>/page/99/</code>)</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><code>?paged=N</code> 301-redirects to the clean <code>/page/N/</code> form</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Add-to-cart URLs are blocked in robots.txt</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec gutter" id="linking" data-nav="seo" data-group="seo">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-link"/></svg></span><div><h2>Internal linking &amp; architecture</h2><p class="dek">Internal links decide how fast Google finds each product and how much weight it gets. Google's 2026 AI guidance names them explicitly.</p></div></div><div class="pts"><b>11</b>/ 12<div class="meter"><i style="width:92%"></i></div></div></div>
+    <div class="cards">
+      <article class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></span><div><div class="tags"><span class="pill sev low">Low</span></div><h3>70 products live under an internal "brochure" path</h3></div></div>
+        <p>Products such as the Sojag Verona pergola sit at <code>/магазин/брошура-bg/…</code>, an internal category, while their breadcrumb shows the real one (Перголи). The URL, the canonical and the sitemap carry "брошура-bg", so the URL hierarchy and the visible hierarchy disagree for 70 products.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> set the real category as the primary category, so it drives the URL, and 301 the old URLs. Plan it as one change, since it moves 70 URLs.</span></p>
+      </article>
+    </div>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>5 checks</span></div>
+    <ul class="oks">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Crawlable menus: 151 internal links on the home page, 212 on the Pergolas category</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Visible breadcrumbs on category and product pages</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Related-product blocks on product pages</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Pagination uses real, crawlable <code>/page/N/</code> links</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Footer links to about, delivery, returns, payment and contact pages</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec gutter alt" id="titles" data-nav="seo" data-group="seo">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-type"/></svg></span><div><h2>Titles, meta &amp; headings</h2><p class="dek">Titles are a relevance signal, and they drive the click-through rate that Google's NavBoost records. Meta descriptions only affect clicks.</p></div></div><div class="pts"><b>6</b>/ 10<div class="meter"><i style="width:60%"></i></div></div></div>
+    <div class="cards">
+      <article class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-alert"/></svg></span><div><div class="tags"><span class="pill sev med">Medium</span></div><h3>No meta descriptions or social tags anywhere</h3></div></div>
+        <p>None of the 8 templates has a meta description, Open Graph or Twitter tags. Google writes its own snippet from page text, and a shared product link shows whatever image Facebook happens to pick.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> description and social templates per page type in the SEO plugin, with hand-written ones for the home page and top categories.</span></p>
+      </article>
+      <article class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-type"/></svg></span><div><div class="tags"><span class="pill sev med">Medium</span></div><h3>Headings and long product titles</h3></div></div>
+        <ul class="clean">
+          <li>The home page has no H1. <code>/продукти/оранжерии/</code> has two ("Оранжерии" twice).</li>
+          <li>Product titles run 87–98 characters, e.g. "Оранжерия SUNNY 18 кв м 6х3х2м UV+, с 2 врати, 12 прозореца, подсилена 44.5 kg…". Google shows about 60.</li>
+        </ul>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> one H1 per template, and a shorter SEO title (name, size, "– 24home") while the full name stays as the H1.</span></p>
+      </article>
+    </div>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>5 checks</span></div>
+    <ul class="oks">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Titles are unique and written in the server HTML</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Category titles are clear: "Перголи – 24home"</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Product title matches the product H1</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Blog titles are questions people search for ("Видове оранжерии- коя да избера?")</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><code>max-image-preview:large</code> allows large image previews in results</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec gutter" id="schema" data-nav="seo" data-group="seo">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-braces"/></svg></span><div><h2>Structured data</h2><p class="dek">Product and merchant markup earns rich results in Google, such as price, stock, shipping and returns. That improves click-through, not rank. As a lever for AI citations, the 2026 evidence is weak.</p></div></div><div class="pts"><b>5</b>/ 10<div class="meter"><i style="width:50%"></i></div></div></div>
+    <div class="cards">
+      <article class="card wide">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-braces"/></svg></span><div><div class="tags"><span class="pill sev med">Medium</span></div><h3>Good product markup; breadcrumb, shop and merchant data missing</h3></div></div>
+        <ul class="clean">
+          <li>Products have no <code>brand</code>, <code>gtin</code> or <code>mpn</code>, and no <code>shippingDetails</code> or <code>hasMerchantReturnPolicy</code>. Since Nov 2025 shipping and returns can be set once, on <code>Organization</code>.</li>
+          <li>No <code>BreadcrumbList</code>, although every product and category shows a breadcrumb.</li>
+          <li>No <code>Organization</code> or <code>WebSite</code> on the home page.</li>
+          <li>Variable products use <code>AggregateOffer</code> with no <code>ProductGroup</code>.</li>
+          <li>Blog posts have no <code>Article</code>, categories no <code>ItemList</code>.</li>
+        </ul>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> the SEO plugin adds Organization, WebSite, BreadcrumbList and Article. Brand (from the "марка" attribute), GTIN, shipping and returns go into the WooCommerce product schema.</span></p>
+      </article>
+    </div>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>5 checks</span></div>
+    <ul class="oks">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><code>Product</code> with name, SKU, images and description</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><code>Offer</code> with EUR price, list price, availability, <code>priceValidUntil</code> and seller</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><code>aggregateRating</code> and <code>review</code> on reviewed products</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>JSON-LD is in the server HTML, so every crawler sees it</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Valid JSON, no parse errors on the 8 templates</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec gutter alt" id="speed" data-nav="seo" data-group="seo">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg></span><div><h2>Core Web Vitals</h2><p class="dek">A confirmed but modest ranking signal, mostly a tiebreaker. Slow mobile pages still cost sales directly.</p></div></div><div class="pts"><b>3</b>/ 8<div class="meter"><i style="width:38%"></i></div></div></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Page (mobile, lab)</th><th>Perf</th><th>FCP</th><th>LCP</th><th>TBT</th><th>CLS</th><th>Weight</th></tr></thead>
+      <tbody>
+        <tr><td>Home</td><td class="n" style="color:var(--poor)">19</td><td class="n" style="color:var(--fair)">2.5 s</td><td class="n" style="color:var(--poor)">37.4 s</td><td class="n" style="color:var(--poor)">870 ms</td><td class="n" style="color:var(--poor)">0.636</td><td class="n">12.4 MB</td></tr>
+        <tr><td>Category · Pergolas</td><td class="n" style="color:var(--poor)">40</td><td class="n" style="color:var(--poor)">3.4 s</td><td class="n" style="color:var(--poor)">26.8 s</td><td class="n" style="color:var(--poor)">910 ms</td><td class="n" style="color:var(--good)">0.001</td><td class="n">6.5 MB</td></tr>
+        <tr><td>Product · greenhouse</td><td class="n" style="color:var(--poor)">29</td><td class="n" style="color:var(--poor)">4.4 s</td><td class="n" style="color:var(--poor)">41.8 s</td><td class="n" style="color:var(--poor)">1,940 ms</td><td class="n" style="color:var(--good)">0.004</td><td class="n">12.3 MB</td></tr>
+        <tr><td>Product · pergola</td><td class="n" style="color:var(--poor)">36</td><td class="n" style="color:var(--poor)">4.1 s</td><td class="n" style="color:var(--poor)">34.2 s</td><td class="n" style="color:var(--poor)">1,050 ms</td><td class="n" style="color:var(--good)">0.022</td><td class="n">8.0 MB</td></tr>
+      </tbody>
+    </table></div>
+    <div class="cards">
+      <article class="card">
+        <div class="ch"><span class="ci poor"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg></span><div><div class="tags"><span class="pill sev high">High</span></div><h3>Full-size photos make pages 6–12 MB</h3></div></div>
+        <ul class="clean">
+          <li>Images are most of the weight: product photos are uploaded as full-size PNG files, such as a 2.2 MB <code>oranzheria-sunny-6x3-dve-vrati.jpg.png</code>.</li>
+          <li>The largest image on the page (the LCP element) is lazy-loaded, so the browser starts it last.</li>
+        </ul>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> serve WebP or AVIF at display size with <code>srcset</code> (an image plugin or CDN does this for existing uploads), and load the first image eagerly with <code>fetchpriority="high"</code>.</span></p>
+      </article>
+      <article class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-activity"/></svg></span><div><div class="tags"><span class="pill sev med">Medium</span></div><h3>Tags block the phone, and the home slider jumps</h3></div></div>
+        <ul class="clean">
+          <li>Google Tag Manager alone blocks the main thread for 1.5 s on the product page. GA4, Ads, Meta, Yandex, Trustindex and TBI all load at start.</li>
+          <li>The home slider shifts the layout twice (0.35 and 0.27), which gives the 0.636 CLS.</li>
+        </ul>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> reserve the slider's height, and load non-essential tags after consent or the first interaction.</span></p>
+      </article>
+      <article class="card">
+        <div class="ch"><span class="ci info"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg></span><div><div class="tags"><span class="pill info">Note</span></div><h3>Reading these numbers</h3></div></div>
+        <ul class="clean">
+          <li>Lab data from Lighthouse 12.8 on a throttled mobile profile. The PageSpeed Insights quota had run out, so there is no real-user (CrUX) data and no INP.</li>
+          <li>Real phones on good connections will load faster than 27–42 s, but the ranking of the problems is the same.</li>
+          <li>The server isn't the problem: the HTML arrives in 20–40 ms.</li>
+        </ul>
+      </article>
+    </div>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>3 checks</span></div>
+    <ul class="oks">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Server response 20–40 ms thanks to full-page caching</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Stable layout on categories and products (CLS 0.001–0.022)</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Text resources are compressed</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec gutter" id="status" data-nav="seo" data-group="seo">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-activity"/></svg></span><div><h2>Status codes</h2><p class="dek">Google may skip rendering non-200 pages, so the status code itself has to be right. Soft 404s waste crawl budget and confuse indexing.</p></div></div><div class="pts"><b>8</b>/ 8<div class="meter"><i style="width:100%"></i></div></div></div>
+    <p class="summary">Every probe returned the right status. No soft 404s, no redirect chains.</p>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>6 checks</span></div>
+    <ul class="oks">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Unknown paths return a real 404</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Junk after a product path returns 404</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Pages past the end of a category return 404</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><code>/sitemap.xml</code> 301-redirects to <code>/wp-sitemap.xml</code> in one hop</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>www, trailing-slash and pagination redirects are single hops</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Missing files (<code>llms.txt</code>, <code>sitemap_index.xml</code>) return a proper 404</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec gutter alt" id="basics" data-nav="seo" data-group="seo">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg></span><div><h2>Mobile, HTTPS &amp; URLs</h2><p class="dek">These are baselines. They carry little ranking weight once they're in place.</p></div></div><div class="pts"><b>6</b>/ 8<div class="meter"><i style="width:75%"></i></div></div></div>
+    <div class="cards">
+      <article class="card">
+        <div class="ch"><span class="ci poor"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg></span><div><div class="tags"><span class="pill sev high">High</span></div><h3>HTTPS isn't enforced, and there are no security headers</h3></div></div>
+        <p>Only the home page redirects from http. There's no HSTS, and none of the usual security headers (<code>Content-Security-Policy</code>, <code>X-Content-Type-Options</code>, <code>X-Frame-Options</code>, <code>Referrer-Policy</code>, <code>Permissions-Policy</code>). For a shop that takes payments and personal data, this is a trust issue as well as an SEO one. Mobile parity and URLs get full marks; HTTPS gets 0 of 2.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> a site-wide 301 to https, HSTS (start with a short max-age), and the basic headers at the host or in the security plugin.</span></p>
+      </article>
+    </div>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>6 checks</span></div>
+    <ul class="oks">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Responsive layout with the viewport meta tag set</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Same content and markup on mobile and desktop</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Valid TLS certificate</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Readable Bulgarian slugs (<code>/продукти/перголи/</code>)</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Lower-case, stable URLs; upper-case variants return 404</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>No session IDs or random IDs in URLs</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec gutter" id="sitemaps" data-nav="seo" data-group="seo">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-map"/></svg></span><div><h2>Sitemaps &amp; IndexNow</h2><p class="dek">Faster discovery and recrawls. Bing ties freshness to Copilot and supports IndexNow. Google doesn't.</p></div></div><div class="pts"><b>3</b>/ 6<div class="meter"><i style="width:50%"></i></div></div></div>
+    <div class="cards">
+      <article class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-map"/></svg></span><div><div class="tags"><span class="pill sev med">Medium</span></div><h3>The sitemap index links a missing file</h3></div></div>
+        <p>WordPress's built-in sitemap lists 732 URLs in 9 files. One of them, <code>wp-sitemap-taxonomies-pa_марка-1.xml</code> (brands), returns 404. The index also lists the default "uncategorized" category and taxonomy pages that have no canonical.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> let the SEO plugin's sitemap replace the core one, with only canonical, indexable URLs in it.</span></p>
+      </article>
+      <article class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></span><div><div class="tags"><span class="pill sev low">Low</span></div><h3>No IndexNow</h3></div></div>
+        <p>Bing and Copilot learn about price and stock changes only when they next recrawl. Taxonomy files also have no <code>lastmod</code>, although product <code>lastmod</code> dates are real (83 different days).</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> turn on IndexNow (built into Rank Math, or the IndexNow plugin) so product updates are sent to Bing as they happen.</span></p>
+      </article>
+    </div>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>4 checks</span></div>
+    <ul class="oks">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Sitemap declared in robots.txt</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Split by type: 619 products, 32 categories, 34 pages, 25 posts</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>All 14 sampled sitemap URLs return 200</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Product <code>lastmod</code> values are real change dates</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== AI visibility readiness ===== -->
+
+<section class="sec gutter alt" id="ai" data-nav="ai" data-group="ai" data-sub="cards">
+  <div class="inner">
+    <div class="chapter"><div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-sparkles"/></svg></span><div><h2>AI visibility readiness</h2><span class="weight">How ready the shop is to be read and cited by AI answers</span></div></div><div class="band-score s-fair"><b>74</b><span>/ 100</span></div></div></div>
+    <p class="summary">This score measures how easily ChatGPT, Claude, Perplexity, Copilot, Gemini and Google AI Overviews can find, read and cite 24home. Every AI crawler we tested, except Meta's, gets the full server-rendered shop, so the hardest part is already in place. Points are lost on duplicate URLs, missing shop and freshness data, and AI-specific files.</p>
+    <div class="cards">
+      <article id="ai-access" class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg></span><div><div class="tags"><span class="pill fair">Fair · 11 of 15</span></div><h3>Meta's crawler is blocked, and training isn't a separate choice</h3></div></div>
+        <p>robots.txt has one <code>User-agent: *</code> group, so every AI crawler is allowed. The firewall, though, answers <code>meta-externalagent</code> (which feeds Meta AI) with HTTP 412 and a 1 KB error. All 25 other agents got a 200. There are no separate rules for training crawlers (GPTBot, ClaudeBot, Google-Extended, CCBot), so the shop hasn't decided whether it wants to be in training sets as well as in AI answers.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> allow <code>meta-externalagent</code> in the firewall if Meta AI visibility is wanted, and write explicit robots.txt groups for training crawlers either way.</span></p>
+      </article>
+      <article id="ai-index" class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg></span><div><div class="tags"><span class="pill fair">Fair · 8 of 15</span></div><h3>Google and Bing can index the shop, but duplicates dilute it</h3></div></div>
+        <p>Gemini and Google AI Overviews answer from Google's index, and Copilot from Bing's. Both bots get full HTML. Points are lost on the same issues as in the SEO part: categories without canonicals, every page on http as well as https, open sort, brand and price URLs, and no meta descriptions. See <a href="#duplicates">Canonicals &amp; duplicate URLs</a> and <a href="#facets">Facets, filters &amp; variants</a>.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> the SEO plugin and HTTPS fixes in the plan lift this score too.</span></p>
+      </article>
+      <article id="ai-extract" class="card">
+        <div class="ch"><span class="ci good"><svg class="ico" aria-hidden="true"><use href="#i-type"/></svg></span><div><div class="tags"><span class="pill good">Strong · 10 of 12</span></div><h3>Product pages are rich in text</h3></div></div>
+        <p>Products carry a written description, a specification table ("Допълнителна информация"), reviews and instructions, all in the server HTML. Blog posts use question headings with concrete sizes and materials. Missing: delivery, returns and TBI instalment terms live on separate pages, not on the product, and there's no FAQ text an assistant could quote.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> a short delivery, returns and instalments block on every product, and a few FAQs per main category.</span></p>
+      </article>
+      <article id="ai-feeds" class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-cart"/></svg></span><div><div class="tags"><span class="pill fair">Fair · 6 of 10</span></div><h3>A shopping feed probably exists, but we couldn't see it</h3></div></div>
+        <p>The cached Pergolas page holds a Performance Max ad click, which usually means a Merchant Center feed. We found no feed plugin or public feed URL to check it. Price and stock are in the JSON-LD; shipping and returns are not. Google's 2026 AI guide tells shops to use Merchant Center feeds to appear in AI shopping answers.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> confirm the feed covers all 619 products, add shipping and returns to it and to the markup, and keep an eye on Google's Universal Commerce Protocol.</span></p>
+      </article>
+      <article id="ai-fresh" class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></span><div><div class="tags"><span class="pill fair">Fair · 4 of 7</span></div><h3>Freshness is half there</h3></div></div>
+        <p>Product <code>lastmod</code> dates in the sitemap are real, and blog posts show dates. But there's no <code>dateModified</code> in the markup, taxonomy sitemaps have no <code>lastmod</code>, and there's no IndexNow. AI bots favour recent content: 65% of their hits went to pages from the past year (Seer; correlation, not cause).</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> <code>dateModified</code> on products and posts (the SEO plugin's schema does this), and IndexNow.</span></p>
+      </article>
+      <article id="ai-entity" class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg></span><div><div class="tags"><span class="pill fair">Fair · 3 of 5</span></div><h3>The shop's identity is visible, but not machine-readable</h3></div></div>
+        <p>The footer has everything an assistant needs to recognise the business: phone +359 898 615 252, Facebook (24home.Bulgaria), Instagram (24home.bg), YouTube (@24home33), a map location, and about, delivery, returns and payment pages. None of it is in <code>Organization</code> markup. Bing has said schema helps its LLMs; Google says no special markup is needed, so the weight is modest.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> <code>Organization</code> (or <code>OnlineStore</code>) on the home page with logo, contact point, address, <code>sameAs</code> links to the three profiles, and shop-wide shipping and returns.</span></p>
+      </article>
+      <article id="ai-agent" class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></span><div><div class="tags"><span class="pill fair">Fair · 3 of 4</span></div><h3>Most controls are named, a few links are not</h3></div></div>
+        <p>Browsing agents act through the accessibility tree. Buttons have names and focus is visible. But product-card overlay links (<code>a.product__link</code>) and brand-slider links have no text, and the enquiry form's phone field is labelled only by its placeholder (see <a href="#a11y">Accessibility</a>).</p>
+      </article>
+      <article id="ai-llms" class="card">
+        <div class="ch"><span class="ci poor"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg></span><div><div class="tags"><span class="pill poor">Weak · 0 of 3</span></div><h3>No llms.txt: a cheap missed opportunity</h3></div></div>
+        <p><code>/llms.txt</code> returns 404. Google says Search doesn't use these files, and SE Ranking found no measurable effect on citations, so the weight is low. They still give AI agents a clean summary of the shop, its categories and its policies.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> a short <code>/llms.txt</code> with the shop's description, main categories, delivery and returns, and contact details. Some SEO plugins generate it.</span></p>
+      </article>
+    </div>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>7 checks</span></div>
+    <ul class="oks">
+      <li id="ai-html"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>HTML for AI crawlers, 23 of 23: OAI-SearchBot, ChatGPT-User, GPTBot, Claude-SearchBot, Claude-User, ClaudeBot, PerplexityBot and Perplexity-User all get the full page</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>robots.txt allows all AI search and user agents</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Googlebot and bingbot get full HTML, so Gemini, AI Overviews and Copilot can read the shop</span></li>
+      <li id="ai-snippet"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Snippet controls, 4 of 4: no <code>nosnippet</code> or <code>max-snippet</code> limits, and <code>max-image-preview:large</code></span></li>
+      <li id="ai-speed"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Speed for AI fetchers, 2 of 2: 0.03–0.08 s to first byte from cache, 1.2–1.6 s on a miss</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Price and stock are machine-readable in JSON-LD</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>About, contact, delivery, returns and payment pages exist</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== Growth readiness ===== -->
+
+<section class="sec gutter" id="beyond" data-nav="beyond">
+  <div class="inner">
+    <div class="chapter"><div class="sec-head"><div class="title"><span class="tile gold"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg></span><div><h2>Growth readiness</h2><span class="weight">Tracking, integrations, consent and accessibility · the average of four areas</span></div></div><div class="band-score s-fair"><b>49</b><span>/ 100</span></div></div></div>
+    <p class="summary">These areas don't affect rankings directly, but they decide whether the shop can measure and grow the traffic SEO brings: running ads, tracking sales, staying compliant with GDPR and the European Accessibility Act. We walked the shop from the home page to a product, added it to the cart and emptied the cart again. No order was placed and no form was sent.</p>
+    <div class="areas">
+      <a class="area" href="#tracking"><div class="top"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg><b>Tracking</b></div><div class="sc"><strong>72</strong><span>/ 100 · Fair</span></div><p>A real e-commerce dataLayer; product data needs cleaning</p></a>
+      <a class="area" href="#integrations"><div class="top"><svg class="ico" aria-hidden="true"><use href="#i-plug"/></svg><b>Integrations</b></div><div class="sc"><strong>55</strong><span>/ 100 · Fair</span></div><p>GA4, Ads and Meta live; none waits for consent</p></a>
+      <a class="area" href="#consent"><div class="top"><svg class="ico" aria-hidden="true"><use href="#i-cookie"/></svg><b>Consent</b></div><div class="sc"><strong>5</strong><span>/ 100 · Weak</span></div><p>No banner; every tag fires before a choice</p></a>
+      <a class="area" href="#a11y"><div class="top"><svg class="ico" aria-hidden="true"><use href="#i-a11y"/></svg><b>Accessibility</b></div><div class="sc"><strong>63</strong><span>/ 100 · Fair</span></div><p>Good basics; contrast, alt text and link names fail</p></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec gutter alt" id="tracking" data-nav="beyond" data-group="beyond">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg></span><div><h2>Tracking &amp; data layer</h2><p class="dek">A standard GA4 e-commerce <code>dataLayer</code> is what makes GA4, Google Ads and Meta reports trustworthy. Wrong product data in it flows into every report and every bidding algorithm.</p></div></div><div class="pts"><b>72</b>/ 100<div class="meter"><i style="width:72%"></i></div></div></div>
+    <div class="tbl"><table>
+      <thead><tr><th>GA4 event</th><th>Source</th><th>What it sends</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><code>page_view</code></td><td>GTM (GA4 tag)</td><td>Page view, with page type pushed first on every page</td><td><span class="st y"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Works</span></td></tr>
+        <tr><td><code>view_item_list</code></td><td>GTM4WP</td><td>3 pushes of 10 items on a category, with id, name, SKU, price and list name; <code>item_brand</code> empty</td><td><span class="st p"><svg class="ico" aria-hidden="true"><use href="#i-half"/></svg>Partial</span></td></tr>
+        <tr><td><code>select_item</code></td><td>GTM4WP</td><td>Not seen when moving from a category to a product</td><td><span class="st n"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Not seen</span></td></tr>
+        <tr><td><code>view_item</code></td><td>GTM4WP</td><td>EUR, value 149, one item with id, SKU and price; <code>item_category</code> "Черен Месец" (a promotion)</td><td><span class="st p"><svg class="ico" aria-hidden="true"><use href="#i-half"/></svg>Partial</span></td></tr>
+        <tr><td><code>add_to_cart</code></td><td>GTM4WP</td><td>EUR, value 149, quantity sent as the text "1"</td><td><span class="st p"><svg class="ico" aria-hidden="true"><use href="#i-half"/></svg>Partial</span></td></tr>
+        <tr><td><code>view_cart</code></td><td>GTM4WP</td><td>EUR, value 149, the cart's items</td><td><span class="st y"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Works</span></td></tr>
+        <tr><td><code>begin_checkout</code>, <code>add_shipping_info</code>, <code>add_payment_info</code></td><td>GTM4WP</td><td>Standard GTM4WP events; not tested, as no checkout was started</td><td><span class="st p"><svg class="ico" aria-hidden="true"><use href="#i-half"/></svg>Not tested live</span></td></tr>
+        <tr><td><code>purchase</code></td><td>GTM4WP</td><td>Fires on the order-received page; not tested, as no order was placed</td><td><span class="st p"><svg class="ico" aria-hidden="true"><use href="#i-half"/></svg>Not tested live</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="cards">
+      <article class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-alert"/></svg></span><div><div class="tags"><span class="pill sev med">Medium</span></div><h3>Product data in the dataLayer needs cleaning</h3></div></div>
+        <ul class="clean">
+          <li><code>item_brand</code> is empty on every item, although the shop has a brand attribute ("марка").</li>
+          <li><code>item_category</code> is the first category assigned, often a promotion ("Черен Месец", "Промоции") rather than "Оранжерии".</li>
+          <li>Price and quantity are sometimes text, sometimes numbers. No <code>ecommerce: null</code> push clears the previous event.</li>
+        </ul>
+        <p class="ev">GA4 reports by brand are empty, reports by category mix promotions with product types, and Ads and Meta get weaker product signals.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> map the brand attribute in GTM4WP's settings, use the primary category, send numbers as numbers, and clear <code>ecommerce</code> before each push.</span></p>
+      </article>
+      <article class="card">
+        <div class="ch"><span class="ci info"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg></span><div><div class="tags"><span class="pill info">Note</span></div><h3>Check checkout and purchase with a test order</h3></div></div>
+        <p>GTM4WP fires <code>purchase</code> with a transaction ID on the order-received page. For bank transfer, cash on delivery and TBI instalments, that's when the order is placed, not when it's paid. We scored these steps at half credit from the plugin's standard behaviour.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> place one test order in GTM preview mode and confirm each step and the purchase value.</span></p>
+      </article>
+    </div>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>5 checks</span></div>
+    <ul class="oks">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>A standard <code>window.dataLayer</code> on every page (GTM4WP)</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>GA4 runs through one GTM container</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Events use GA4's <code>items[]</code> format with id, name, SKU and price</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Currency (EUR) and value on every e-commerce event</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>The cart walk produced view, add-to-cart and cart events in the right order</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec gutter" id="integrations" data-nav="beyond" data-group="beyond">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-plug"/></svg></span><div><h2>Marketing integrations</h2><p class="dek">Ads and analytics only pay off when every platform gets the same, consented events. Server-side events recover sales that browsers block.</p></div></div><div class="pts"><b>55</b>/ 100<div class="meter"><i style="width:55%"></i></div></div></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Integration</th><th>How it's set up</th><th>Live</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Google Analytics 4</td><td>GTM (GTM4WP plugin)</td><td><span class="st y"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Yes</span></td><td>One property, e-commerce events from the dataLayer</td></tr>
+        <tr><td>Google Ads</td><td>GTM</td><td><span class="st y"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Yes</span></td><td>Remarketing hits on page view, item list, item and add-to-cart; enhanced conversions not seen</td></tr>
+        <tr><td>Meta Pixel</td><td>PixelYourSite</td><td><span class="st y"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Yes</span></td><td>PageView, ViewCategory, ViewContent, AddToCart; Conversions API option on</td></tr>
+        <tr><td>TikTok Pixel</td><td>None</td><td><span class="st n"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>No</span></td><td></td></tr>
+        <tr><td>Yandex Metrica</td><td>Code in the theme header</td><td><span class="st p"><svg class="ico" aria-hidden="true"><use href="#i-half"/></svg>Yes</span></td><td>Sends visitor data to mc.yandex.ru and mc.yandex.com</td></tr>
+        <tr><td>Trustindex reviews, TBI instalments, Bulgarian couriers</td><td>Plugins</td><td><span class="st y"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Yes</span></td><td>Reviews widget, instalment calculator, courier offices and labels</td></tr>
+        <tr><td>Unidentified Google Cloud Run endpoint</td><td>Unknown</td><td><span class="st p"><svg class="ico" aria-hidden="true"><use href="#i-half"/></svg>Yes</span></td><td><code>mpc2-prod-25-…a.run.app</code>, called on every page</td></tr>
+      </tbody>
+    </table></div>
+    <div class="cards">
+      <article class="card">
+        <div class="ch"><span class="ci poor"><svg class="ico" aria-hidden="true"><use href="#i-plug"/></svg></span><div><div class="tags"><span class="pill sev high">High</span></div><h3>No tag waits for consent, and Yandex sends data outside the EU</h3></div></div>
+        <p>GA4, Google Ads, Meta and Yandex all start on the first page view. PixelYourSite's "wait for consent" options are switched on, but no consent tool is connected to them, so they never wait. Yandex Metrica sends visitor data to Russian servers, which is hard to justify under GDPR for a Bulgarian shop.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> connect every tag to the consent tool (see <a href="#consent">Consent</a>), remove Yandex Metrica unless there's a clear need, and identify the Cloud Run endpoint.</span></p>
+      </article>
+      <article class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-cart"/></svg></span><div><div class="tags"><span class="pill sev med">Medium</span></div><h3>Enhanced conversions and deduplication are unverified</h3></div></div>
+        <p>We saw no enhanced-conversions data on the Google Ads tag. Meta's Conversions API is switched on in PixelYourSite, but without a purchase we couldn't confirm that browser and server events share an <code>event_id</code>, which Meta needs to avoid counting sales twice.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> turn on enhanced conversions (with consent), and check deduplication in Meta's Events Manager after a test order.</span></p>
+      </article>
+    </div>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>4 checks</span></div>
+    <ul class="oks">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>GA4 and Google Ads managed in one GTM container</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Meta Pixel sends the standard shop events</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Server-side Meta events (Conversions API) available through PixelYourSite</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Reviews, instalments and courier integrations that suit the Bulgarian market</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec gutter alt" id="consent" data-nav="beyond" data-group="beyond">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-cookie"/></svg></span><div><h2>Consent &amp; Consent Mode v2</h2><p class="dek">In the EEA, Google Ads requires Consent Mode v2 for remarketing and conversion modelling. GDPR requires that rejecting is as easy as accepting, and that no tracking runs before the visitor chooses.</p></div></div><div class="pts"><b>5</b>/ 100<div class="meter"><i style="width:5%"></i></div></div></div>
+    <div class="cards">
+      <article class="card wide">
+        <div class="ch"><span class="ci poor"><svg class="ico" aria-hidden="true"><use href="#i-alert"/></svg></span><div><div class="tags"><span class="pill sev crit">Critical</span></div><h3>No consent banner, and tracking starts on the first page view</h3></div></div>
+        <p>A first-time visitor sees no banner at all. Before any click, the home page sets these cookies:</p>
+        <ul class="clean">
+          <li><b>Google:</b> <code>_ga</code>, <code>_ga_8SEHV4T3T1</code>, <code>_gcl_au</code>, and <code>test_cookie</code> and <code>IDE</code> on doubleclick.net.</li>
+          <li><b>Meta:</b> <code>_fbp</code>.</li>
+          <li><b>Yandex:</b> <code>_ym_uid</code>, <code>_ym_d</code>, <code>_ym_isad</code>, plus cookies on yandex.com and yandex.ru.</li>
+        </ul>
+        <p class="ev">GA4, Google Ads, Meta and Yandex requests all fire at the same time. The cookie policy page (<code>/политика-за-бисквитки-ес/</code>) is linked in the footer but offers no choice. Leftover styles for a Complianz banner in the theme suggest a consent plugin was removed at some point.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> a Google-certified consent tool (for example Cookiebot, CookieYes or Complianz) with Accept and Reject on the first layer, analytics and marketing categories, and a "Cookie settings" link in the footer. Nothing loads until the visitor chooses.</span></p>
+      </article>
+      <article class="card">
+        <div class="ch"><span class="ci poor"><svg class="ico" aria-hidden="true"><use href="#i-cookie"/></svg></span><div><div class="tags"><span class="pill sev high">High</span></div><h3>Consent Mode v2 says "granted" by default</h3></div></div>
+        <p>The page sets Consent Mode's <code>default</code> with <code>ad_storage</code>, <code>analytics_storage</code>, <code>ad_user_data</code> and <code>ad_personalization</code> all <code>granted</code>. So Google is told the visitor agreed to ads and analytics when they were never asked.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> <code>default</code> denied for all four signals, and an <code>update</code> from the consent tool when the visitor chooses.</span></p>
+      </article>
+    </div>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>3 checks</span></div>
+    <ul class="oks">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>A cookie policy page exists and is linked in the footer</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Consent Mode is already wired in; only its default values are wrong</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>PixelYourSite has consent settings ready to connect to a consent tool</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec gutter" id="a11y" data-nav="beyond" data-group="beyond">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-a11y"/></svg></span><div><h2>Accessibility (WCAG 2.2 AA)</h2><p class="dek">Since 28 June 2025 the European Accessibility Act covers e-commerce in EU states such as Bulgaria, with an exemption for micro-enterprises.</p></div></div><div class="pts"><b>63</b>/ 100<div class="meter"><i style="width:63%"></i></div></div></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Page (axe-core 4.10, WCAG 2.2 AA)</th><th>Main violations (affected elements)</th></tr></thead>
+      <tbody>
+        <tr><td>Home</td><td>Colour contrast 3 · image alt 2 · link name 9 · list 7 · list item 24</td></tr>
+        <tr><td>Category · Pergolas</td><td>Colour contrast 25 · image alt 1 · link name 1</td></tr>
+        <tr><td>Product · greenhouse</td><td>Colour contrast 32 · list 1 · list item 4</td></tr>
+        <tr><td>Product · variable greenhouse</td><td>Colour contrast 27 · list 1 · list item 4</td></tr>
+        <tr><td>Blog post</td><td>Colour contrast 3</td></tr>
+        <tr><td>Contact</td><td>Colour contrast 4 · frame title 1</td></tr>
+      </tbody>
+    </table></div>
+    <div class="cards">
+      <article class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-alert"/></svg></span><div><div class="tags"><span class="pill sev med">Medium</span></div><h3>Contrast fails on every template</h3></div></div>
+        <p>The white-on-green top bar ("Октомврийски оферти…"), the search label and the price and meta text on product cards fall below 4.5:1. Category and product pages have 25–32 affected elements each.</p>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> darken the green and the grey text in the theme settings; one change fixes every page.</span></p>
+      </article>
+      <article class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-a11y"/></svg></span><div><div class="tags"><span class="pill sev med">Medium</span></div><h3>Unnamed links and images, sliders and small targets</h3></div></div>
+        <ul class="clean">
+          <li>Product-card overlay links and brand-slider links have no text. About half the images have no <code>alt</code> (54 of 86 on the home page).</li>
+          <li>The sliders put <code>div</code>s directly in lists, and their dots are 7×7 px; review stars are 15×15 px (WCAG asks for 24 px).</li>
+          <li>The Google Maps frame on the contact page has no title, and the enquiry form's phone field is labelled only by its placeholder.</li>
+          <li>The skip link reads "Skip to content" in English. The home page has no H1, and there's no accessibility statement.</li>
+        </ul>
+        <p class="fix"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg><span><b>Fix:</b> names on card and slider links, alt text in the media library, list markup and larger dots in the sliders, and a Bulgarian accessibility statement.</span></p>
+      </article>
+    </div>
+    <div class="ok-head"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg>Checked and working <span>6 checks</span></div>
+    <ul class="oks">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><code>lang="bg-BG"</code> in the server HTML on every page</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>A skip link to the main content</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>A visible 3 px focus outline on every tab stop we checked</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>No buttons without a name on the home and product pages</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>One <code>main</code> landmark per page, and descriptive page titles</span></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Blog and contact pages have only 3–5 automated issues</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec gutter alt" id="plan" data-nav="plan">
+  <div class="inner">
+    <div class="chapter"><div class="sec-head"><div class="title"><span class="tile gold"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg></span><div><h2>Fix plan, by impact and effort</h2><span class="weight">Estimated score gains and effort per fix</span></div></div></div></div>
+    <h3>SEO and AI visibility readiness</h3>
+    <ol class="plan">
+      <li><div><b>Install and configure one SEO plugin</b><p>Rank Math or Yoast: canonicals on categories and archives, canonical or <code>noindex</code> on sort, filter and price URLs, meta descriptions, Organization, WebSite and BreadcrumbList markup, and a clean sitemap.</p><p class="plan-meta"><span class="effort">Config change</span><span>See <a href="#duplicates">Duplicate URLs</a> · <a href="#facets">Facets</a> · <a href="#schema">Structured data</a> · <a href="#sitemaps">Sitemaps</a></span></p></div><div class="gain"><span class="g-seo">SEO +11</span><span class="g-ai">AI +6</span></div></li>
+      <li><div><b>Enforce HTTPS everywhere</b><p>A site-wide 301 from http to https, HSTS, and the basic security headers.</p><p class="plan-meta"><span class="effort">Config change</span><span>See <a href="#basics">Mobile &amp; HTTPS</a> · <a href="#duplicates">Duplicate URLs</a></span></p></div><div class="gain"><span class="g-seo">SEO +4</span><span class="g-ai">AI +1</span></div></li>
+      <li><div><b>Shrink the images and fix the first paint</b><p>WebP or AVIF at display size with <code>srcset</code>, the first image loaded eagerly, and a fixed height for the home slider.</p><p class="plan-meta"><span class="effort">Template</span><span>See <a href="#speed">Page speed</a></span></p></div><div class="gain"><span class="g-seo">SEO +3</span></div></li>
+      <li><div><b>Clean the page cache</b><p>Purge it, and keep <code>gclid</code>, <code>utm_*</code> and <code>fbclid</code> out of the cache key and out of generated links.</p><p class="plan-meta"><span class="effort">Config change</span><span>See <a href="#facets">Facets &amp; variants</a></span></p></div><div class="gain"><span class="g-seo">SEO +1</span></div></li>
+      <li><div><b>Complete the product markup</b><p>Brand, GTIN, shipping and returns on products, <code>ProductGroup</code> for variable products, and Article on blog posts.</p><p class="plan-meta"><span class="effort">Template</span><span>See <a href="#schema">Structured data</a> · <a href="#ai-feeds">Product feeds</a></span></p></div><div class="gain"><span class="g-seo">SEO +3</span><span class="g-ai">AI +2</span></div></li>
+      <li><div><b>Fix headings and shorten product titles</b><p>An H1 on the home page, one H1 per category, SEO titles under 60 characters, and social tags.</p><p class="plan-meta"><span class="effort">Template</span><span>See <a href="#titles">Titles &amp; headings</a></span></p></div><div class="gain"><span class="g-seo">SEO +3</span></div></li>
+      <li><div><b>Load marketing tags later</b><p>Delay non-essential tags until consent or the first interaction, and remove Yandex Metrica.</p><p class="plan-meta"><span class="effort">Config change</span><span>See <a href="#speed">Page speed</a> · <a href="#integrations">Integrations</a></span></p></div><div class="gain"><span class="g-seo">SEO +2</span></div></li>
+      <li><div><b>AI access, freshness and llms.txt</b><p>Allow Meta's crawler, add robots.txt groups for training crawlers, add <code>dateModified</code>, turn on IndexNow, and publish <code>/llms.txt</code>.</p><p class="plan-meta"><span class="effort">Config change</span><span>See <a href="#ai-access">AI crawler access</a> · <a href="#ai-fresh">Freshness signals</a> · <a href="#ai-llms">llms.txt &amp; AI files</a></span></p></div><div class="gain"><span class="g-seo">SEO +1</span><span class="g-ai">AI +10</span></div></li>
+      <li><div><b>Delivery, returns and FAQs on product pages, and a checked feed</b><p>A short terms block and category FAQs, and a Merchant Center feed with shipping and returns.</p><p class="plan-meta"><span class="effort">Template</span><span>See <a href="#ai-extract">Extractable content</a> · <a href="#ai-feeds">Product feeds</a></span></p></div><div class="gain"><span class="g-ai">AI +4</span></div></li>
+      <li><div><b>Move the "brochure" products to their real categories</b><p>Set the primary category so 70 product URLs match their breadcrumb, with 301s from the old URLs.</p><p class="plan-meta"><span class="effort">Project</span><span>See <a href="#linking">Internal linking</a></span></p></div><div class="gain"><span class="g-seo">SEO +1</span></div></li>
+    </ol>
+    <h3 style="margin-top:12px">Growth readiness</h3>
+    <ol class="plan">
+      <li><div><b>Consent first: a certified consent tool with Consent Mode v2</b><p>Accept and Reject on the first layer, categories, a "Cookie settings" link, Consent Mode defaults set to denied, and every tag connected to it.</p><p class="plan-meta"><span class="effort">Config change</span><span>See <a href="#consent">Consent</a> · <a href="#integrations">Integrations</a></span></p></div><div class="gain"><span class="g-mk">Consent +85</span><span class="g-mk">Integrations +20</span></div></li>
+      <li><div><b>Clean the dataLayer's product data</b><p>Brand, primary category, numeric price and quantity, <code>ecommerce: null</code>, <code>select_item</code>, and a test order to confirm checkout and purchase.</p><p class="plan-meta"><span class="effort">Config change</span><span>See <a href="#tracking">Tracking</a></span></p></div><div class="gain"><span class="g-mk">Tracking +15</span></div></li>
+      <li><div><b>Enhanced conversions and server-side deduplication</b><p>Enhanced conversions on the Google Ads tag, and a shared <code>event_id</code> for Meta's browser and server events.</p><p class="plan-meta"><span class="effort">Config change</span><span>See <a href="#integrations">Integrations</a> · <a href="#tracking">Tracking</a></span></p></div><div class="gain"><span class="g-mk">Integrations +15</span><span class="g-mk">Tracking +5</span></div></li>
+      <li><div><b>Accessibility fixes in the theme</b><p>Contrast, link names, alt text, slider markup and dot size, the Maps frame title, the phone field label, a Bulgarian skip link and an accessibility statement.</p><p class="plan-meta"><span class="effort">Template</span><span>See <a href="#a11y">Accessibility</a></span></p></div><div class="gain"><span class="g-mk">Accessibility +30</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== Evidence: why the weights are what they are ===== -->
+
+<section class="sec gutter" id="factors" data-nav="factors">
+  <div class="inner">
+    <div class="chapter"><div class="sec-head"><div class="title"><span class="tile gold"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg></span><div><h2>What actually moves the needle in 2026</h2><span class="weight">Evidence review behind the weights</span></div></div></div></div>
+    <p class="summary">Ranked from Google and Bing documentation, the AI vendors' crawler docs, the Princeton GEO paper and 2025–26 studies from Ahrefs, SE Ranking, Seer and Vercel. Vendor studies show correlation, not cause. Claims we couldn't verify were left out of the weights.</p>
+    <div class="two">
+      <div>
+        <h3><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg>Classic SEO (Google, Bing)</h3>
+        <div class="factors">
+          <div class="factor"><span class="i">1</span><div><b>Content is in the HTML the crawler receives</b><small>Google calls dynamic rendering "a workaround" and recommends server-side or static rendering. <a href="https://developers.google.com/search/docs/crawling-indexing/javascript/dynamic-rendering">Google</a></small></div><div class="tiers"><span class="pill sev crit">Critical</span></div></div>
+          <div class="factor"><span class="i">2</span><div><b>Indexability, canonicals and duplicate control</b><small>Since Dec 2025, Google may skip rendering non-200 pages, and canonicals must not change in JS. Facets and variants are the main e-commerce risk. <a href="https://ppc.land/google-clarifies-javascript-rendering-for-error-pages-in-december-documentation-update/">PPC Land</a></small></div><div class="tiers"><span class="pill sev crit">Critical</span></div></div>
+          <div class="factor"><span class="i">3</span><div><b>Unique, useful content per template</b><small>The Mar and May 2026 core updates again targeted thin and duplicate pages.</small></div><div class="tiers"><span class="pill sev crit">Critical</span></div></div>
+          <div class="factor"><span class="i">4</span><div><b>Internal linking and architecture</b><small>Named in Google's AI features guidance. The 2024 leak shows link data is stored per page. <a href="https://developers.google.com/search/docs/appearance/ai-features">Google</a></small></div><div class="tiers"><span class="pill sev high">High</span></div></div>
+          <div class="factor"><span class="i">5</span><div><b>Title tags and headings</b><small>A relevance input. They also drive the click-through rate that NavBoost records.</small></div><div class="tiers"><span class="pill sev high">High</span></div></div>
+          <div class="factor"><span class="i">6</span><div><b>Product and merchant listing markup</b><small>Improves rich results and click-through, not rank. Since Nov 2025, shipping and returns can go in Organization markup. <a href="https://developers.google.com/search/blog/2025/11/more-ways-to-share-shipping?hl=en">Google</a></small></div><div class="tiers"><span class="pill sev high">High</span></div></div>
+          <div class="factor"><span class="i">7</span><div><b>Sitemaps with real lastmod, plus IndexNow for Bing</b><small>Speeds up discovery and recrawls. Bing ties freshness to Copilot.</small></div><div class="tiers"><span class="pill sev med">Medium</span></div></div>
+          <div class="factor"><span class="i">8</span><div><b>Core Web Vitals (LCP, INP, CLS)</b><small>A confirmed signal, but mostly a tiebreaker. Claims that INP gained weight in 2026 are unverified.</small></div><div class="tiers"><span class="pill sev med">Medium</span></div></div>
+          <div class="factor"><span class="i">9</span><div><b>Mobile parity, HTTPS, URL format, meta descriptions</b><small>Expected baselines with little ranking weight. Meta descriptions affect click-through only.</small></div><div class="tiers"><span class="pill sev low">Low</span></div></div>
+        </div>
+      </div>
+      <div>
+        <h3><svg class="ico" aria-hidden="true"><use href="#i-sparkles"/></svg>AEO / GEO (AI answers)</h3>
+        <div class="factors">
+          <div class="factor"><span class="i">1</span><div><b>Server-rendered HTML for every agent</b><small>GPTBot, ClaudeBot and PerplexityBot fetch JS files but don't run them. Gemini uses Google's renderer. <a href="https://vercel.com/blog/the-rise-of-the-ai-crawler">Vercel/MERJ</a></small></div><div class="tiers"><span class="pill sev crit">Critical</span></div></div>
+          <div class="factor"><span class="i">2</span><div><b>AI crawler access (robots, CDN, WAF)</b><small>OpenAI says sites that opt out of OAI-SearchBot won't be shown in ChatGPT search answers. <a href="https://developers.openai.com/docs/bots">OpenAI</a></small></div><div class="tiers"><span class="pill sev crit">Critical</span></div></div>
+          <div class="factor"><span class="i">3</span><div><b>Indexed and snippet-eligible in Google and Bing</b><small>Google: no extra requirements for AI Overviews. Copilot runs on Bing's index. <a href="https://developers.google.com/search/docs/appearance/ai-features">Google</a></small></div><div class="tiers"><span class="pill sev crit">Critical</span></div></div>
+          <div class="factor"><span class="i">4</span><div><b>Extractable facts: text, headings, tables, stats</b><small>Up to about 40% more visibility in a lab test. Google says no AI-specific "chunking" is needed. <a href="https://arxiv.org/abs/2311.09735">Princeton GEO, KDD 2024</a></small></div><div class="tiers"><span class="pill sev high">High</span></div></div>
+          <div class="factor"><span class="i">5</span><div><b>Product feeds (Merchant Center, UCP)</b><small>Google's 2026 guide tells shops to use feeds to appear in AI shopping answers. <a href="https://developers.google.com/search/docs/fundamentals/ai-optimization-guide">Google</a></small></div><div class="tiers"><span class="pill sev high">High</span></div></div>
+          <div class="factor"><span class="i">6</span><div><b>Freshness: real updates, dateModified, IndexNow</b><small>65% of AI bot hits went to content from the past year. <a href="https://www.seerinteractive.com/insights/study-ai-brand-visibility-and-content-recency">Seer</a></small></div><div class="tiers"><span class="pill sev med">Medium</span></div></div>
+          <div class="factor"><span class="i">7</span><div><b>Entity markup (Organization, sameAs)</b><small>Bing has confirmed that schema helps its LLMs. Google says no special schema is needed.</small></div><div class="tiers"><span class="pill sev med">Medium</span></div></div>
+          <div class="factor"><span class="i">8</span><div><b>Generic schema as a citation lever</b><small>A controlled test found no significant lift (ChatGPT +2.2%, AI Overviews −4.6%). <a href="https://ahrefs.com/blog/schema-ai-citations/">Ahrefs, May 2026</a></small></div><div class="tiers"><span class="pill sev low">Low</span></div></div>
+          <div class="factor"><span class="i">9</span><div><b>llms.txt</b><small>Google says Search doesn't use it. About 10% of sites have one, with no measurable citation effect. Cheap to add, so we weight it 3 points. <a href="https://seranking.com/blog/llms-txt/">SE Ranking</a></small></div><div class="tiers"><span class="pill info">Negligible</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <div class="ch"><span class="ci info"><svg class="ico" aria-hidden="true"><use href="#i-lightbulb"/></svg></span><div><h3>Rendering splits the two channels</h3></div></div>
+        <p>Google renders JavaScript, and almost every other AI crawler doesn't. A shop that builds its pages in the browser can pass for Google and still be invisible to ChatGPT, Claude and Perplexity. 24home serves full HTML to everyone, which is what both channels need.</p>
+      </article>
+      <article class="card">
+        <div class="ch"><span class="ci info"><svg class="ico" aria-hidden="true"><use href="#i-lightbulb"/></svg></span><div><h3>Schema matters for Google, less for AI</h3></div></div>
+        <p>Product and merchant markup still earns rich results in Google. As a lever for AI citations it's disputed: Ahrefs' 2026 controlled test found no lift. What drives AI citations most is off-page (referring domains, brand mentions, YouTube, Reddit), which no site setting can control.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec gutter alt" id="sources" data-nav="factors">
+  <div class="inner">
+    <div class="sec-head"><div class="title"><span class="tile gold"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg></span><div><h2>Methodology &amp; Sources</h2><span class="weight">How we tested, and what we didn't cover</span></div></div></div>
+    <div class="cards">
+      <article class="card">
+        <div class="ch"><span class="ci info"><svg class="ico" aria-hidden="true"><use href="#i-check-c"/></svg></span><div><h3>What we ran</h3></div></div>
+        <ul class="clean">
+          <li>HTTP fetches of one product as a browser, as Googlebot and as 24 other agents, with and without a cache-busting parameter</li>
+          <li>URL-variant, filter, parameter and status-code probes, and a check of the sitemap index, its 9 files and a 14-URL sample</li>
+          <li>Parsing of the server HTML of 8 page templates for meta, canonical, headings, links, images and JSON-LD</li>
+          <li>A real Chrome session from the home page to the cart (one product added, then removed), recording the dataLayer, network calls, cookies and consent state</li>
+          <li>Local Lighthouse 12.8 (4 mobile runs), axe-core 4.10 on 6 pages, and a 24 px target-size measurement at phone width</li>
+        </ul>
+      </article>
+      <article class="card">
+        <div class="ch"><span class="ci fair"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg></span><div><h3>What we didn't cover</h3></div></div>
+        <ul class="clean">
+          <li>Search Console, Bing AI Performance and index coverage</li>
+          <li>Real-user CrUX data, including INP (the PageSpeed Insights quota was exhausted)</li>
+          <li>Live prompt testing in ChatGPT, Perplexity and Gemini</li>
+          <li>Checkout, payment and purchase events: no order was placed, and no form was sent</li>
+          <li>The Merchant Center feed, ad accounts and the logged-in account area</li>
+        </ul>
+      </article>
+    </div>
+    <h3>Key sources</h3>
+    <ol class="sources">
+      <li><a href="https://developers.google.com/search/docs/fundamentals/ai-optimization-guide">Google: Optimizing for generative AI search (Jul 2026)</a></li>
+      <li><a href="https://developers.google.com/search/docs/appearance/ai-features">Google: AI features and your website (Dec 2025)</a></li>
+      <li><a href="https://developers.google.com/search/docs/crawling-indexing/javascript/dynamic-rendering">Google: dynamic rendering as a workaround</a></li>
+      <li><a href="https://ppc.land/google-clarifies-javascript-rendering-for-error-pages-in-december-documentation-update/">Google JS doc update on non-200 rendering (Dec 2025)</a></li>
+      <li><a href="https://developers.google.com/search/docs/crawling-indexing/crawling-managing-faceted-navigation">Google: managing faceted navigation URLs</a></li>
+      <li><a href="https://developers.google.com/search/blog/2025/11/more-ways-to-share-shipping?hl=en">Google: shipping and returns via Organization markup (Nov 2025)</a></li>
+      <li><a href="https://developers.google.com/search/docs/appearance/structured-data/product-variants">Google: product variants (ProductGroup)</a></li>
+      <li><a href="https://developers.google.com/tag-platform/security/guides/consent">Google: Consent Mode</a></li>
+      <li><a href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce">Google: GA4 e-commerce events</a></li>
+      <li><a href="https://developers.google.com/search/blog/2026/06/gen-ai-performance-reports">Google: Search Console generative AI reports (Jun 2026)</a></li>
+      <li><a href="https://blogs.bing.com/webmaster/February-2026/Introducing-AI-Performance-in-Bing-Webmaster-Tools-Public-Preview">Bing: AI Performance in Webmaster Tools (Feb 2026)</a></li>
+      <li><a href="https://developers.openai.com/docs/bots">OpenAI crawlers</a> · <a href="https://support.claude.com/en/articles/8896518-anthropic-crawlers">Anthropic crawlers</a></li>
+      <li><a href="https://vercel.com/blog/the-rise-of-the-ai-crawler">Vercel/MERJ: AI crawlers don't run JavaScript (Dec 2024)</a></li>
+      <li><a href="https://arxiv.org/abs/2311.09735">Aggarwal et al.: GEO (KDD 2024)</a></li>
+      <li><a href="https://ahrefs.com/blog/schema-ai-citations/">Ahrefs: schema and AI citations (May 2026)</a></li>
+      <li><a href="https://seranking.com/blog/chatgpt-citation-factors/">SE Ranking: ChatGPT citation factors</a> · <a href="https://seranking.com/blog/llms-txt/">llms.txt study</a></li>
+      <li><a href="https://www.seerinteractive.com/insights/study-ai-brand-visibility-and-content-recency">Seer: AI visibility and content recency (Oct 2025)</a></li>
+      <li><a href="https://www.w3.org/TR/WCAG22/">W3C: WCAG 2.2</a> · <a href="https://commission.europa.eu/strategy-and-policy/policies/justice-and-fundamental-rights/disability/union-equality-strategy-rights-persons-disabilities-2021-2030/european-accessibility-act_en">European Accessibility Act</a></li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<footer class="site gutter">
+  <div class="inner">
+    <a class="brand" href="#score" aria-label="Back to top"><span class="wordmark" translate="no">24home<span> · SEO infrastructure check</span></span></a>
+    <span>Prepared 22 October 2026 · <a href="#sources">Sources</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  // Light by default; dark only when the viewer picks it here (remembered per browser).
+  var modeBtn=document.getElementById('modeBtn'), modeUse=document.getElementById('modeUse'), meta=document.querySelector('meta[name="theme-color"]');
+  var modeRow=document.getElementById('modeRow'), modeRowUse=document.getElementById('modeRowUse');
+  function setMode(m){ root.setAttribute('data-mode',m); modeUse.setAttribute('href', m==='dark'?'#i-sun':'#i-moon'); modeBtn.setAttribute('aria-label', m==='dark'?'Switch to light mode':'Switch to dark mode'); document.getElementById('modeTip').textContent = m==='dark'?'Light mode':'Dark mode';
+    modeRow.setAttribute('aria-checked', String(m==='dark')); modeRowUse.setAttribute('href', m==='dark'?'#i-sun':'#i-moon'); if(meta) meta.setAttribute('content', m==='dark'?'#0c1018':'#fafbfc'); try{localStorage.setItem('ddm-mode',m)}catch(e){} }
+  var saved=null; try{saved=localStorage.getItem('ddm-mode')}catch(e){}
+  setMode(saved==='dark'?'dark':'light');
+  function flipMode(){ setMode(root.getAttribute('data-mode')==='dark'?'light':'dark'); }
+  modeBtn.addEventListener('click',flipMode);
+  modeRow.addEventListener('click',flipMode);
+
+  // Phone menu.
+  var menuBtn=document.getElementById('menuBtn'), panel=document.getElementById('menuPanel');
+  function closeMenu(){ panel.hidden=true; menuBtn.setAttribute('aria-expanded','false'); }
+  menuBtn.addEventListener('click',function(){ var open=panel.hidden; panel.hidden=!open; menuBtn.setAttribute('aria-expanded',String(open)); });
+  panel.addEventListener('click',function(e){ if(e.target.closest('a')) closeMenu(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !panel.hidden){ closeMenu(); menuBtn.focus(); } });
+  // A tap outside closes the menu; outside the header, that tap is swallowed so the page underneath doesn't react.
+  var swallow=false;
+  document.addEventListener('pointerdown',function(e){
+    if(panel.hidden || panel.contains(e.target) || menuBtn.contains(e.target)) return;
+    closeMenu(); if(!e.target.closest('.site-header')){ swallow=true; setTimeout(function(){ swallow=false; },700); }
+  },true);
+  document.addEventListener('click',function(e){ if(swallow){ swallow=false; e.preventDefault(); e.stopPropagation(); } },true);
+
+  // Label every table cell with its column name, for the stacked phone layout.
+  [].forEach.call(document.querySelectorAll('.tbl table'),function(t){
+    var heads=[].map.call(t.querySelectorAll('thead th'),function(th){ return th.querySelector('.sr')?'':th.textContent.trim(); });
+    [].forEach.call(t.querySelectorAll('tbody tr'),function(tr){ [].forEach.call(tr.children,function(td,i){ if(heads[i]) td.setAttribute('data-label',heads[i]); }); });
+  });
+
+  // Score count-up; the static numbers stay if this never runs.
+  function count(id,target,delay,dur){ var el=document.getElementById(id), t0=null; el.textContent='0';
+    function step(t){ if(!t0) t0=t; var p=Math.min((t-t0)/dur,1); el.textContent=Math.round(target*(1-Math.pow(1-p,3))); if(p<1) requestAnimationFrame(step); }
+    setTimeout(function(){requestAnimationFrame(step)},delay); }
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){ count('scoreNum',70,200,1600); count('aiNum',74,600,1400); count('ecNum',49,800,1400); }
+
+  // Status colour for every score: read from the bar's own width (80+ strong, 40-79 fair, under 40 weak).
+  function band(p){ return p>=80?'s-good':p>=40?'s-fair':'s-poor'; }
+  [].forEach.call(document.querySelectorAll('.pts'),function(el){ var i=el.querySelector('.meter i'); if(i) el.classList.add(band(parseFloat(i.style.width))); });
+  [].forEach.call(document.querySelectorAll('.rowbar'),function(el){ var i=el.querySelector('i'); if(i) el.classList.add(band(parseFloat(i.style.width))); });
+  [].forEach.call(document.querySelectorAll('.area .sc strong'),function(el){ el.classList.add(band(parseFloat(el.textContent))); });
+
+  // Folding. Everything stays in the page; without this script it all shows open.
+  function chev(){ return '<svg class="ico" aria-hidden="true"><use href="#i-chev"/></svg>'; }
+  function reduceMotion(){ return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+  function chev2(){ return '<svg class="ico" aria-hidden="true"><use href="#i-chevs"/></svg>'; }
+  function plural(n,w){ return n+' '+w+(n===1?'':'s'); }
+
+  // Evidence: top three rows of each list, the rest behind one button.
+  var two=document.querySelector('#factors .two');
+  if(two){
+    var extra=[].slice.call(document.querySelectorAll('#factors .factor:nth-child(n+4)')).concat([].slice.call(document.querySelectorAll('#factors .two ~ .cards')));
+    var rowsLeft=document.querySelectorAll('#factors .factor:nth-child(n+4)').length;
+    var fb=document.createElement('button'); fb.type='button'; fb.className='fold-btn'; fb.setAttribute('aria-expanded','false');
+    function factorLabel(open){ fb.innerHTML=chev()+(open?'Show the top 3 only':'Show all factors <small>'+rowsLeft+' more rows and 2 takeaways</small>'); }
+    extra.forEach(function(el){ el.hidden=true; }); factorLabel(false);
+    two.parentNode.insertBefore(fb, two.nextSibling);
+    fb.addEventListener('click',function(){ var open=fb.getAttribute('aria-expanded')!=='true';
+      extra.forEach(function(el){ el.hidden=!open; }); two.classList.toggle('all',open);
+      fb.setAttribute('aria-expanded',String(open)); factorLabel(open);
+      var cards=document.querySelector('#factors .two ~ .cards'); if(cards) fb.parentNode.insertBefore(fb, open?cards.nextSibling:two.nextSibling);
+    });
+  }
+
+  // Findings areas: header, note and score stay; issues, tables and passed checks fold.
+  var folds={};
+  var FOLDED='section[data-group]:not([data-sub]), #sources'; // AI readiness stays open: its cards are its second row
+  [].forEach.call(document.querySelectorAll(FOLDED),function(s){
+    var inner=s.querySelector('.inner'), head=inner.querySelector('.sec-head');
+    var kids=[].filter.call(inner.children,function(el){ return !el.matches('.sec-head,.summary'); });
+    if(!kids.length) return;
+    var issues=inner.querySelectorAll('.cards .card').length, oks=inner.querySelectorAll('.oks li').length;
+    var fold=document.createElement('div'); fold.className='fold'; fold.id=s.id+'-details';
+    var fin=document.createElement('div'); fin.className='fold-in'; fold.appendChild(fin);
+    kids.forEach(function(el){ fin.appendChild(el); });
+    var btn=document.createElement('button'); btn.type='button'; btn.className='fold-btn';
+    var h2=head.querySelector('h2'), area=h2?h2.textContent.trim().replace(/&/g,'&amp;').replace(/</g,'&lt;'):'';
+    btn.setAttribute('aria-controls',fold.id);
+    var hint=s.id==='sources' ? '<small>methodology and sources</small>' : '<small>'+plural(issues,'issue')+' · '+plural(oks,'passed check')+'</small>';
+    function set(open){
+      btn.setAttribute('aria-expanded',String(open));
+      btn.innerHTML=chev()+'<span class="sr">'+area+': </span>'+(open?'Hide details':'Show '+hint);
+      fold.classList.toggle('open',open); fold.classList.remove('settled');
+      if(folds[s.id] && folds[s.id].onChange) folds[s.id].onChange();
+      // Content stays clipped until the opening animation has really finished (slow devices included).
+      if(open){ fin.removeAttribute('inert'); var done=function(){ if(fold.classList.contains('open')) fold.classList.add('settled'); };
+        fold.addEventListener('transitionend',function te(ev){ if(ev.target===fold){ fold.removeEventListener('transitionend',te); done(); } });
+        if(reduceMotion()) done(); }
+      else fin.setAttribute('inert','');
+    }
+    // Header, note, summary and button form one click target, gaps included.
+    var hit=document.createElement('div'); hit.className='fold-hit'; inner.insertBefore(hit, head);
+    [].slice.call(inner.querySelectorAll(':scope > .sec-head, :scope > .summary')).forEach(function(el){ hit.appendChild(el); });
+    // The button sits in the header row, beside the score.
+    var right=document.createElement('div'); right.className='head-r';
+    var pts=head.querySelector(':scope > .pts'); if(pts) right.appendChild(pts);
+    right.appendChild(btn); head.appendChild(right);
+    inner.appendChild(fold); set(false);
+    btn.addEventListener('click',function(e){ e.stopPropagation(); set(btn.getAttribute('aria-expanded')!=='true'); });
+    hit.addEventListener('click',function(e){
+      if(e.target.closest('a,button')) return;
+      var sel=window.getSelection&&window.getSelection(); if(sel && String(sel).length) return;
+      set(btn.getAttribute('aria-expanded')!=='true');
+    });
+    folds[s.id]={set:set,group:s.dataset.group,isOpen:function(){ return fold.classList.contains('open'); }};
+  });
+
+  // Expand or collapse a whole group, from a control in that group's header row.
+  var allBtns={};
+  function syncAll(g){ var b=allBtns[g]; if(!b) return;
+    var ks=Object.keys(folds).filter(function(k){ return folds[k].group===g; });
+    var open=ks.every(function(k){ return folds[k].isOpen(); });
+    b.setAttribute('aria-expanded',String(open));
+    b.innerHTML=chev2()+(open?'Collapse all':'Expand all <small>'+ks.length+' areas</small>');
+  }
+  ['seo','beyond'].forEach(function(g){
+    var head=document.querySelector('#'+g+' .sec-head'); if(!head) return;
+    var b=document.createElement('button'); b.type='button'; b.className='fold-btn fold-all';
+    b.addEventListener('click',function(){ var open=b.getAttribute('aria-expanded')!=='true';
+      Object.keys(folds).forEach(function(k){ if(folds[k].group===g) folds[k].set(open); }); syncAll(g); });
+    var right=document.createElement('div'); right.className='head-r'; right.appendChild(b); head.appendChild(right);
+    allBtns[g]=b; syncAll(g);
+  });
+  Object.keys(folds).forEach(function(k){ folds[k].onChange=function(){ syncAll(folds[k].group); }; });
+
+  // Contextual second row: built from each group's sections.
+  var subnav=document.getElementById('subnav'), subInner=document.getElementById('subnavInner');
+  var groups={seo:{label:'SEO readiness',items:[]},ai:{label:'AI readiness',items:[]},beyond:{label:'Growth readiness',items:[]}};
+  var short={rendering:'Rendering',duplicates:'Duplicates',facets:'Facets & variants',linking:'Linking',titles:'Titles',schema:'Schema',speed:'Speed',status:'Status',basics:'Basics',sitemaps:'Sitemaps',tracking:'Tracking',integrations:'Integrations',consent:'Consent',a11y:'Accessibility','ai-html':'HTML for AI','ai-access':'Crawler access','ai-index':'Indexability','ai-extract':'Extractable','ai-feeds':'Feeds','ai-fresh':'Freshness','ai-entity':'Entity','ai-agent':'Agents','ai-speed':'Speed','ai-llms':'llms.txt'};
+  [].forEach.call(document.querySelectorAll('section[data-group]'),function(s){
+    // A one-section group (AI readiness) takes its finding cards as the items instead.
+    if(s.dataset.sub==='cards'){ [].forEach.call(s.querySelectorAll('.cards > .card[id]'),function(c){ var u=c.querySelector('.ci use'); groups[s.dataset.group].items.push({id:c.id,label:short[c.id]||c.id,icon:u?u.getAttribute('href'):'#i-sparkles'}); }); return; }
+    var icon=s.querySelector('.tile use').getAttribute('href');
+    groups[s.dataset.group].items.push({id:s.id,label:short[s.id]||s.id,icon:icon});
+  });
+  var currentGroup=null, subLinks={};
+  function buildSub(g){
+    if(g===currentGroup) return; currentGroup=g; subLinks={}; subInner.innerHTML='';
+    if(!g){ subnav.classList.remove('show'); subnav.hidden=true; return; }
+    var lbl=document.createElement('span'); lbl.className='lbl'; lbl.textContent=groups[g].label; subInner.appendChild(lbl);
+    groups[g].items.forEach(function(it){
+      var a=document.createElement('a'); a.href='#'+it.id;
+      a.innerHTML='<svg class="ico" aria-hidden="true"><use href="'+it.icon+'"/></svg>'+it.label.replace(/&/g,'&amp;');
+      subInner.appendChild(a); subLinks[it.id]=a;
+    });
+    subnav.classList.remove('grp-seo','grp-ai','grp-beyond'); subnav.classList.add('grp-'+g); subnav.hidden=false; requestAnimationFrame(function(){ subnav.classList.add('show'); checkOverflow(); });
+  }
+  function checkOverflow(){ subnav.classList.toggle('overflow', subInner.scrollWidth > subInner.clientWidth+1); }
+  window.addEventListener('resize', function(){ if(currentGroup) checkOverflow(); });
+  function markSub(id){
+    Object.keys(subLinks).forEach(function(k){ subLinks[k].classList.toggle('active',k===id); if(k===id) subLinks[k].setAttribute('aria-current','true'); else subLinks[k].removeAttribute('aria-current'); });
+    var a=subLinks[id]; if(a){ var l=a.offsetLeft-subInner.clientWidth/2+a.clientWidth/2; subInner.scrollTo({left:Math.max(0,l),behavior:'smooth'}); }
+  }
+
+  // Which section is current: the last one whose top has passed a line just under the sticky header.
+  // (A scroll position check, not a viewport band, so short folded sections are never skipped.)
+  var header=document.querySelector('.site-header'), SUB_H=52, GAP=16;
+  var secs=[].slice.call(document.querySelectorAll('main section[data-nav]'));
+  var links={}; [].forEach.call(document.querySelectorAll('.nav a, .meth-btn'),function(a){ links[a.dataset.nav]=a; });
+  var menuLinks=[].slice.call(document.querySelectorAll('#menuPanel a[href^="#"]'));
+  function setActive(s){
+    var k=s.dataset.nav;
+    Object.keys(links).forEach(function(n){ var on=n===k; links[n].classList.toggle('active',on); if(on) links[n].setAttribute('aria-current','true'); else links[n].removeAttribute('aria-current'); });
+    menuLinks.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href')==='#'+s.id || a.getAttribute('href')==='#'+k); });
+    buildSub(s.dataset.group||null); if(s.dataset.group) markSub(s.dataset.sub==='cards'?currentCard(s):s.id);
+  }
+  // In a card group, the current item is in the last card row whose top has passed the line under the sticky rows.
+  // Cards sit two to a row: the one last jumped to wins its row, otherwise the left one.
+  var pickedCard=null;
+  function currentCard(s){
+    var line=header.getBoundingClientRect().bottom+SUB_H+GAP+8, rowTop=null;
+    var cards=groups[s.dataset.group].items.map(function(it){ return {id:it.id,top:document.getElementById(it.id).getBoundingClientRect().top}; });
+    cards.forEach(function(c){ if(c.top<=line) rowTop=c.top; });
+    if(rowTop===null) return cards[0].id;
+    var row=cards.filter(function(c){ return Math.abs(c.top-rowTop)<3; });
+    return row.some(function(c){ return c.id===pickedCard; }) ? pickedCard : row[0].id;
+  }
+  var lockUntil=0;
+  function spy(){
+    if(Date.now()<lockUntil) return;
+    var line=header.getBoundingClientRect().bottom+SUB_H+GAP+8, cur=secs[0];
+    secs.forEach(function(s){ if(s.getBoundingClientRect().top<=line) cur=s; });
+    setActive(cur);
+  }
+  var ticking=false;
+  // The header is dark at the very top and turns to frosted light glass once the page moves.
+  function topState(){ document.documentElement.classList.toggle('scrolled', window.scrollY>8); }
+  topState();
+  window.addEventListener('scroll',function(){ if(!ticking){ ticking=true; requestAnimationFrame(function(){ ticking=false; topState(); spy(); }); } },{passive:true});
+  window.addEventListener('resize',spy);
+  window.addEventListener('scrollend',spy);
+
+  // Every in-page link: open the target if it is folded, highlight it at once, and land it just under the sticky rows.
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Chapter sections land flush under the header (their dark band is the top edge); everything else gets a 16 px gap.
+  function offsetFor(s,t){ return header.getBoundingClientRect().bottom+(s.dataset.group?SUB_H:0)+((t===s||!t)&&s.querySelector(':scope > .inner > .chapter')?0:GAP); }
+  function goTo(id,smooth){
+    var t=document.getElementById(id); if(!t) return false;
+    var s=t.closest('main section[data-nav]')||t;
+    var f=t.closest(FOLDED); if(f && folds[f.id]) folds[f.id].set(true);
+    // Evidence rows past the top three sit behind their own button.
+    if(fb && t.closest('#factors [hidden]') && fb.getAttribute('aria-expanded')!=='true') fb.click();
+    pickedCard=id; setActive(s); if(subLinks[id]) markSub(id); lockUntil=Date.now()+1500;
+    function target(){ return Math.max(0, t.getBoundingClientRect().top+window.scrollY-offsetFor(s,t)); }
+    window.scrollTo({top:target(),behavior:(smooth&&!reduce)?'smooth':'auto'});
+    // Areas above may still be animating open or shut; re-aim once they settle.
+    setTimeout(function(){ var y=target(); if(Math.abs(y-window.scrollY)>3) window.scrollTo({top:y,behavior:'auto'}); },460);
+    setTimeout(function(){ lockUntil=0; spy(); },1500);
+    if(!t.hasAttribute('tabindex')) t.setAttribute('tabindex','-1');
+    // A target inside a fold that just opened can't take focus in the same frame (it was inert): try again once it can.
+    function focusT(){ if(document.activeElement!==t) t.focus({preventScroll:true}); }
+    focusT(); requestAnimationFrame(function(){ requestAnimationFrame(focusT); }); setTimeout(focusT,480);
+    try{ history.replaceState(null,'','#'+id); }catch(e){}
+    return true;
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href^="#"]'); if(!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    var id=decodeURIComponent(a.getAttribute('href').slice(1)); if(!id || id==='main') return;
+    if(document.getElementById(id) && goTo(id,true)) e.preventDefault();
+  });
+  // Breakdown rows: the whole row opens that area, through the same link handler.
+  document.addEventListener('click',function(e){
+    var tr=e.target.closest('.bd tbody tr'); if(!tr || e.target.closest('a')) return;
+    var sel=window.getSelection&&window.getSelection(); if(sel && String(sel).length) return;
+    var a=tr.querySelector('a[href^="#"]'); if(a) a.click();
+  });
+  // Keyword search over every finding, table row, check, factor, fix and source.
+  var searchBtn=document.getElementById('searchBtn'), sPanel=document.getElementById('searchPanel'), sInput=document.getElementById('searchInput'),
+      sList=document.getElementById('searchResults'), sStatus=document.getElementById('searchStatus');
+  function norm(t){ return t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase(); }
+  // Readable text: a space at every block or cell boundary; skip icons, labels and gain tags.
+  var INLINE=/^(B|STRONG|EM|I|CODE|A|MARK|ABBR|SUB|SUP)$/;
+  function words(el){ var out=[]; (function walk(n){ [].forEach.call(n.childNodes,function(c){
+    if(c.nodeType===3) out.push(c.nodeValue);
+    else if(c.nodeType===1 && !c.matches('svg,button,.sr,.tags,.tiers,.gain,.i,.pts,.band-score')){ var blk=!INLINE.test(c.tagName); if(blk) out.push(' '); walk(c); if(blk) out.push(' '); }
+  }); })(el); return out.join('').replace(/\s+/g,' ').trim(); }
+  function esc(t){ return t.replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  var UNITS='.sec-head, .card, .oks li, .tbl:not(.bd) tbody tr, .factor, .plan li, .sources li, .summary';
+  var index=[], qn=0;
+  secs.forEach(function(s){
+    if(s.id==='score') return;
+    var h2=s.querySelector('h2'), area=h2?h2.textContent.trim():'', use=s.querySelector('.tile use'), icon=use?use.getAttribute('href'):'#i-book',
+        hue=getComputedStyle(s).getPropertyValue('--hue').trim(), ref=(s.id==='factors'||s.id==='sources')?1:0;
+    [].forEach.call(s.querySelectorAll(UNITS),function(el){
+      if(el.closest('.bd') || (el.parentElement && el.parentElement.closest(UNITS))) return;
+      var head=el.matches('.sec-head'), t=el.querySelector('h2,h3,b'), title=t?t.textContent.trim():'';
+      if(el.matches('.oks li')) title='Checked and working';
+      else if(el.matches('tr')) title=words(el.cells[0]);
+      else if(el.matches('.summary,.sources li')) title='';
+      var text=words(el), rest=title && text.indexOf(title)===0 ? text.slice(title.length).trim() : text;
+      var id=head ? s.id : (el.id || (el.id='q'+(++qn)));
+      index.push({id:id,area:area,icon:icon,hue:hue,title:title,rest:rest,nt:norm(text),nh:norm(title),head:head,ref:ref,n:index.length});
+    });
+  });
+  function mark(t,terms){
+    var out=esc(t);
+    terms.forEach(function(w){ var re=new RegExp('('+esc(w).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'); out=out.replace(re,'\u0001$1\u0002'); });
+    return out.replace(/\u0001/g,'<mark>').replace(/\u0002/g,'</mark>');
+  }
+  function snip(t,terms){
+    if(t.length<=150) return t;
+    var lt=norm(t), i=-1; terms.some(function(w){ i=lt.indexOf(w); return i>-1; });
+    var a=Math.max(0,(i<0?0:i)-50), b=Math.min(t.length,a+150);
+    // Start and end on whole words.
+    if(a>0){ var sp=t.indexOf(' ',a); if(sp>-1 && sp<a+25) a=sp+1; }
+    if(b<t.length){ var ep=t.lastIndexOf(' ',b); if(ep>a+100) b=ep; }
+    return (a>0?'… ':'')+t.slice(a,b).trim()+(b<t.length?' …':'');
+  }
+  var sel=-1, MAX=30;
+  function options(){ return [].slice.call(sList.querySelectorAll('a')); }
+  function pick(i){ var o=options(); if(!o.length) return; sel=(i+o.length)%o.length;
+    o.forEach(function(a,k){ a.setAttribute('aria-selected',String(k===sel)); });
+    sInput.setAttribute('aria-activedescendant',o[sel].id); o[sel].scrollIntoView({block:'nearest'}); }
+  function run(){
+    var q=sInput.value.trim(), terms=norm(q).split(/\s+/).filter(Boolean);
+    sList.innerHTML=''; sel=-1; sInput.removeAttribute('aria-activedescendant');
+    if(!terms.length){ sStatus.textContent='Type a keyword, for example canonical, robots.txt, GA4, consent or schema.'; sInput.setAttribute('aria-expanded','false'); return; }
+    var hits=index.filter(function(it){ return terms.every(function(w){ return it.nt.indexOf(w)>-1; }); });
+    hits.forEach(function(it){ it.score=(it.head?20:0)+terms.filter(function(w){ return it.nh.indexOf(w)>-1; }).length*10; });
+    // Findings and the fix plan first; the methodology evidence and sources after them.
+    hits.sort(function(a,b){ return a.ref-b.ref || b.score-a.score || a.n-b.n; });
+    sStatus.textContent=hits.length ? hits.length+(hits.length===1?' match':' matches')+(hits.length>MAX?', showing the first '+MAX:'')+'. Enter opens the first.' : 'No matches for “'+q+'”. Try a shorter or different word.';
+    hits.slice(0,MAX).forEach(function(it,k){
+      var li=document.createElement('li'); li.setAttribute('role','presentation');
+      var body=it.rest ? snip(it.rest,terms) : '';
+      li.innerHTML='<a role="option" id="sr'+k+'" href="#'+it.id+'" style="--hue:'+(it.hue||'var(--purple)')+'"><svg class="ico" aria-hidden="true"><use href="'+it.icon+'"/></svg>'+
+        '<span class="where">'+esc(it.area)+'</span><span class="what">'+(it.title?'<b>'+mark(it.title,terms)+'</b> ':'')+mark(body,terms)+'</span></a>';
+      sList.appendChild(li);
+    });
+    sInput.setAttribute('aria-expanded',String(hits.length>0));
+  }
+  function openSearch(){ closeMenu(); sPanel.hidden=false; searchBtn.setAttribute('aria-expanded','true'); run(); sInput.focus(); sInput.select(); }
+  function closeSearch(back){ if(sPanel.hidden) return; sPanel.hidden=true; searchBtn.setAttribute('aria-expanded','false'); if(back) searchBtn.focus(); }
+  searchBtn.addEventListener('click',function(){ if(sPanel.hidden) openSearch(); else closeSearch(); });
+  menuBtn.addEventListener('click',function(){ closeSearch(); });
+  sInput.addEventListener('input',run);
+  sInput.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'){ e.preventDefault(); pick(sel+1); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); pick(sel-1); }
+    else if(e.key==='Enter'){ var o=options(); if(o.length){ e.preventDefault(); o[sel<0?0:sel].click(); } }
+    else if(e.key==='Escape'){ e.preventDefault(); closeSearch(true); }
+  });
+  // After the jump, the matched item glows gold for a moment.
+  sList.addEventListener('click',function(e){
+    var a=e.target.closest('a'); if(!a) return;
+    var el=document.getElementById(a.getAttribute('href').slice(1)); closeSearch();
+    if(el){ var h=el.matches('section')?el.querySelector('.sec-head'):el;
+      setTimeout(function(){ h.classList.remove('q-flash'); void h.offsetWidth; h.classList.add('q-flash'); },reduce?0:480);
+      setTimeout(function(){ h.classList.remove('q-flash'); },3400); }
+  });
+  document.addEventListener('pointerdown',function(e){ if(!sPanel.hidden && !sPanel.contains(e.target) && !searchBtn.contains(e.target)) closeSearch(); });
+  document.addEventListener('keydown',function(e){
+    var typing=e.target.closest && e.target.closest('input,textarea,select,[contenteditable="true"]');
+    if((e.key==='k'||e.key==='K') && (e.ctrlKey||e.metaKey)){ e.preventDefault(); openSearch(); }
+    else if(e.key==='/' && !typing && !e.ctrlKey && !e.metaKey && !e.altKey){ e.preventDefault(); openSearch(); }
+  });
+  window.addEventListener('hashchange',function(){ var id=location.hash.slice(1); if(id && id!=='main') goTo(decodeURIComponent(id),false); });
+  if(location.hash.length>1 && location.hash!=='#main') setTimeout(function(){ goTo(decodeURIComponent(location.hash.slice(1)),false); },50); else spy();
+})();
+</script>
+</body>
+</html>
