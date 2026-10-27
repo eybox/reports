@@ -1,2 +1,20 @@
+# Reports are not for search engines: every page also says noindex.
+# Link-preview bots may read the reports and the preview image, so a shared link shows its title, description and image (D71).
+User-agent: facebookexternalhit
+User-agent: Facebot
+User-agent: Twitterbot
+User-agent: LinkedInBot
+User-agent: Slackbot-LinkExpanding
+User-agent: Slackbot
+User-agent: WhatsApp
+User-agent: TelegramBot
+User-agent: Discordbot
+User-agent: Viber
+User-agent: SkypeUriPreview
+User-agent: Applebot
+Allow: /r/
+Allow: /og/
+Disallow: /
+
 User-agent: *
 Disallow: /
